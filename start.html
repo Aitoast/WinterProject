@@ -1,13 +1,8 @@
 <!DOCTYPE html>
 <html>
     <head>
-        <script type="module/javascript" src="example.js"></script> 
         <title>Tukinvest</title>
         <meta charset="UTF-8">
-        
-        <!-- <link rel="stylesheet" href="css/autocomplete.css">
-        <script type="text/javascript" src="js/autocomplate.js"></script>
-        <script type="text/javascript" src="js/animal.js"></script> -->
         <style>
             a{
                 color: black;
@@ -29,22 +24,16 @@
             }
         </style>
     </head>
+
     <body>
-        
         <h2><a href="index.html" target="blank" >stock ups-and-downs</a></h2>
         <h1><a title="한공대주식">stock ups-and-downs</a></h1>
         
         <div class ="search">
-            
-            
-            <script type="text/javascript" src="example3.js" ></script>
-            <script type="module/javascript" src="example2.js"></script>
-            <input type = "text" id="stock" placeholder = "주식이름 입력" onchange="GetStockId()">
-            
+            <!-- post방식으로 form 태그를 사용해서 server.js 파일에 검색창에 입력한 주식 이름을 보낸다. -->
+            <form action="/" method="post">
+                <input type = "text" name="stock" placeholder = "주식이름 입력">
+            </form>
         </div>
-        <!-- <script>
-          
-        </script> -->
-        <script src="server.js"></script> 
     </body>
 </html>

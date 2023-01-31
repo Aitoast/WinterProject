@@ -9,7 +9,7 @@ secret = lines[1].strip()
 acc_no = lines[2].strip()
 f.close()
 
-broker = mojito.KoreaInvestment(  #브로커객체를 생성
+broker = mojito.KoreaInvestment(  #브로커객체를 생성(broker.broker파일 생성)
 	api_key=key,
 	api_secret=secret,
 	acc_no=acc_no
@@ -18,8 +18,10 @@ broker = mojito.KoreaInvestment(  #브로커객체를 생성
 symbols = broker.fetch_symbols() # 전체 종목코드를 가져와 테이블에 넣는다. 
 sym=pd.DataFrame(symbols)
 
-db_connection_str ='mysql+pymysql://root:1234@localhost/solodb?charset=utf8'
+
+db_connection_str ='mysql+pymysql://root:1234@localhost/solodb?charset=utf8'#파이썬과 mysql 연동 코드
 db_connection = create_engine(db_connection_str)
 conn = db_connection.connect()
 
-sym.to_sql(name='prac',con=db_connection,if_exists='replace', index=False)
+sym.to_sql(name='hey',con=db_connection,if_exists='replace', index=False)# pandas dataframe으로 받아온 데이터를 mysql에 저장 
+
