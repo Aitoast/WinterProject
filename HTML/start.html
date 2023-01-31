@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Tukinvest</title>
+        <meta charset="UTF-8">
+        <style>
+            a{
+                color: black;
+                text-decoration: none;
+            }
+            @media (max-width: 800px) {
+                
+            }
+            h1{
+                font-size: 60px;
+                text-align: center;
+               
+            }
+            .search{
+                text-align: center;
+            }
+            .event{
+                color: gray;
+            }
+        </style>
+    </head>
+
+    <body>
+        <h2><a href="index.html" target="blank" >stock ups-and-downs</a></h2>
+        <h1><a title="한공대주식">stock ups-and-downs</a></h1>
+        
+        <div class ="search">
+            <!-- post방식으로 form 태그를 사용해서 server.js 파일에 검색창에 입력한 주식 이름을 보낸다. -->
+            <form action="/" method="post">
+                <input type = "text" name="stock" placeholder = "주식이름 입력">
+            </form>
+        </div>
+    </body>
+</html>
