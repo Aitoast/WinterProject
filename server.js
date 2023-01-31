@@ -36,19 +36,17 @@ server.get("/", (req, res) => {
   res.sendFile(__dirname + "/start.html");
 });
 
+//파일을 읽어오게 도와주는 fs(fileSystem 모듈)
+import fs from 'fs'
+
 // post로 검색창의 입력값 받아오기
 server.post("/",(req,res)=>{
   //입력값 확인용 코드 추후 삭제하고 sendFile 함수 사용 예정
   res.send(`<span>${req.body.stock}</span>`)
 
-
-  const conn = {  // mysql 접속 설정
-    host: '127.0.0.1',
-    port: '3306',
-    user: 'root',
-    password: '1234',
-    database: 'solodb'
-  };
+  // mysql 접속 설정
+  //fs.readFileSync로 json파일을 문자열로 읽어오고 JSON.parse로 Object로 변환해줌
+  const conn = JSON.parse(fs.readFileSync('./sqlData/sqlData.json'))
 
   let connection = createConnection(conn); // DB 커넥션 생성
 
