@@ -18,13 +18,14 @@ broker = mojito.KoreaInvestment(  #브로커객체를 생성(broker.broker파일
 
 symbols = broker.fetch_symbols() # 전체 종목코드를 가져와 테이블에 넣는다. 
 sym=pd.DataFrame(symbols)
+print(sym)
 
 #solo_data변수에 딕셔너리로 담기
 with open('./SoloData/sqlData.json') as f:
   solo_data = json.load(f)
 
 
-db_connection_str =f'mysql+pymysql://{solo_data.user}:{solo_data.password}@{solo_data.host}/{solo_data.database}?charset=utf8'
+db_connection_str =f'mysql+pymysql://{solo_data["user"]}:{solo_data["password"]}@{solo_data["host"]}/{solo_data["database"]}?charset=utf8'
 db_connection = create_engine(db_connection_str)
 conn = db_connection.connect()
 

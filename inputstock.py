@@ -26,8 +26,10 @@ response = broker.fetch_price(sys.argv[1]) #server.js 69번째 줄의 인자를 
 
 res=pd.DataFrame(response)
 
-db_connection_str =f'mysql+pymysql://{solo_data.user}:{solo_data.password}@{solo_data.host}/{solo_data.database}?charset=utf8'
+db_connection_str =f'mysql+pymysql://{solo_data["user"]}:{solo_data["password"]}@{solo_data["host"]}/{solo_data["database"]}?charset=utf8'
 db_connection = create_engine(db_connection_str)
 conn = db_connection.connect()
 
 res.to_sql(name='boy',con=db_connection,if_exists='replace', index=False)
+
+conn.close()
