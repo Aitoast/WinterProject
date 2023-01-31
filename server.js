@@ -12,6 +12,9 @@ import bodyParser from "body-parser";
 //mysql과 js 연동을 위한 모듈
 import { createConnection } from "mysql";
 
+//파일을 읽어오게 도와주는 fs(fileSystem 모듈)
+import fs from 'fs'
+
 //path와 url 모듈의 함수 사용
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
@@ -20,7 +23,9 @@ const server = express();
 
 //웹을 열면 DB에 모든 함수이름과 종목코드 저장 16~17
 import { spawn as a } from 'child_process';
-a('py',['wholedata.py']);
+
+//디렉토리에 설치된 파이썬으로 실행
+a('./python/python',['wholedata.py']);
 
 //서버 3000번 사용 
 server.listen(3000, (err) => {
@@ -36,8 +41,6 @@ server.get("/", (req, res) => {
   res.sendFile(__dirname + "/start.html");
 });
 
-//파일을 읽어오게 도와주는 fs(fileSystem 모듈)
-import fs from 'fs'
 
 // post로 검색창의 입력값 받아오기
 server.post("/",(req,res)=>{
@@ -64,7 +67,7 @@ server.post("/",(req,res)=>{
       }
       else{
           console.log(stockcode[0]["단축코드"])
-          const result = a('py',['inputstock.py',stockcode[0]["단축코드"]]);
+          const result = a('./python/python',['inputstock.py',stockcode[0]["단축코드"]]);
       }
   });
   connection.end();
