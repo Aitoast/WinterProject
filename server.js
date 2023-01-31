@@ -25,7 +25,7 @@ const server = express();
 import { spawn as a } from 'child_process';
 
 //디렉토리에 설치된 파이썬으로 실행
-a('./python/python',['wholedata.py']);
+a('./python/python',['wholedata.py'])
 
 //서버 3000번 사용 
 server.listen(3000, (err) => {
@@ -49,7 +49,7 @@ server.post("/",(req,res)=>{
 
   // mysql 접속 설정
   //fs.readFileSync로 json파일을 문자열로 읽어오고 JSON.parse로 Object로 변환해줌
-  const conn = JSON.parse(fs.readFileSync('./sqlData/sqlData.json'))
+  const conn = JSON.parse(fs.readFileSync('./SoloData/sqlData.json'))
 
   let connection = createConnection(conn); // DB 커넥션 생성
 
@@ -59,7 +59,7 @@ server.post("/",(req,res)=>{
     })
   
   //입력정보로 종목코드를 뽑아오는 sql 명령문 
-  let sql= `SELECT 단축코드 FROM solodb.stock WHERE 한글명="${req.body.stock}"`
+  let sql= `SELECT 단축코드 FROM solodb.hey WHERE 한글명="${req.body.stock}"`
       
   connection.query(sql,function(err,stockcode){
       if (err) {
