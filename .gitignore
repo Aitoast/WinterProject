@@ -17,3 +17,5 @@ token.dat
 Broker.broker
 
 .vscode
+
+sqlData/sqlData.json
