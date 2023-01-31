@@ -19,3 +19,5 @@ Broker.broker
 .vscode
 
 sqlData/sqlData.json
+
+__pycache__
