@@ -1,18 +1,29 @@
 import request from 'request';
 import fs from 'fs';
 import { setFlagsFromString } from 'v8';
+import { runInThisContext } from 'vm';
 
 /**
  * 내가만든 모히토 모듈
  */
 class Mymojito{
   /**
-   * key값 읽어오기, base_url 설정
+   * key값 읽어오기
+   * base_url 설정
+   * 토큰 갱신 또는 불러오기
   */
   constructor(api_key, api_secret){
     this.api_key = api_key;
     this.api_secret = api_secret;
     this.base_url = "https://openapi.koreainvestment.com:9443"
+
+    this.access_token = "";
+    if(this.check_access_token()){
+      this.load_access_token();
+    }
+    else{
+      this.issue_token();
+    }
   }
   /**
   *토큰 발급함수
