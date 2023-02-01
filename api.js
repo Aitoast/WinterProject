@@ -1,7 +1,5 @@
 import request from 'request';
 import fs from 'fs';
-import { setFlagsFromString } from 'v8';
-import { runInThisContext } from 'vm';
 
 /**
  * 내가만든 모히토 모듈
@@ -16,7 +14,6 @@ class Mymojito{
     this.api_key = api_key;
     this.api_secret = api_secret;
     this.base_url = "https://openapi.koreainvestment.com:9443"
-
     this.access_token = "";
     if(this.check_access_token()){
       this.load_access_token();
@@ -27,7 +24,9 @@ class Mymojito{
         this.access_token = `Bearer ${token_data.access_token}`
         token_data.api_key = this.api_key
         token_data.api_secret = this.api_secret
-        fs.writeFileSync('token.dat',JSON.stringify(token_data))
+        fs.writeFile('token.dat',JSON.stringify(token_data),function(err){
+          if(err) throw err;})
+        // fs.writeFileSync('token.dat',JSON.stringify(token_data))
       });
     }
   }
@@ -112,3 +111,10 @@ class Mymojito{
   }
 }
 
+
+var broker = new Mymojito("app","secetkey")
+
+
+broker.fetch_price('001500').then((body)=>{
+  console.log(body)
+})
