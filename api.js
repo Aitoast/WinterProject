@@ -80,5 +80,38 @@ class Mymojito{
     var data = fs.readFileSync('./token.dat','utf-8')
     this.access_token = `Bearer ${JSON.parse(data).access_token}`
   }
+  /**
+   * @param {string} symbol 종목코드
+   * Promise 객체를 반환한다.
+   * 데이터를 사용하고 싶다면
+   * fetch_price.then((value)=>{
+   *  console.log(value)
+   * })
+   * 위 처럼 value로 값을 받아온다!!
+   */
+  fetch_price(symbol) {
+    var path = "uapi/domestic-stock/v1/quotations/inquire-price";
+    var option = {
+      method: 'GET',
+      url: `${this.base_url}/${path}`,
+      headers : { 
+        "content-type": "application/json",
+        "authorization": this.access_token,
+        "appkey" : this.api_key, 
+        "appsecret": this.api_secret,
+        "tr_id": "FHKST01010100"
+      },
+      qs : {
+        fid_cond_mrkt_div_code: "J",
+        fid_input_iscd : symbol
+      }
+    }
+    return new Promise(function(resolve,reject){
+      request(option, function (error, response, body) {
+        if (error) throw new Error(error);
+        resolve(body)
+      })
+    })
+  }
 }
 
