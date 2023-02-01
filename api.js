@@ -65,5 +65,9 @@ class Mymojito{
       return false
     }
   }
+  load_access_token(){
+    var data = fs.readFileSync('./token.dat','utf-8')
+    this.access_token = `Bearer ${JSON.parse(data).access_token}`
+  }
 }
 
