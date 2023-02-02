@@ -112,7 +112,9 @@ class Mymojito{
 }
 
 
-var broker = new Mymojito("app","secetkey")
+var app = fs.readFileSync('./app.txt','utf8')
+var secret = fs.readFileSync('./secret.txt','utf8')
+var broker = new Mymojito(app,secret)
 
 
 broker.fetch_price('001500').then((body)=>{
