@@ -9,3 +9,7 @@ token.dat
 .vscode
 
 SoloData/sqlData.json
+
+app.txt
+
+secret.txt
