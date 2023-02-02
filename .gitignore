@@ -1,23 +1,11 @@
 node_modules/
 
-kosdaq_code.mst
-
-kosdaq_code.mst.zip
-
-kospi_code.mst
-
-kospi_code.mst.zip
-
 mykey.txt
 
 package-lock.json
 
 token.dat
 
-Broker.broker
-
 .vscode
 
 SoloData/sqlData.json
-
-__pycache__
