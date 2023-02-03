@@ -6,10 +6,10 @@ import fs from 'fs';
  */
 class Mymojito{
   /**
-   * key값 읽어오기
-   * base_url 설정
-   * 토큰 갱신 또는 불러오기
-  */
+   * 속성값들 초기화
+   * @param {string} api_key app키 나중 환경변수 변경예정
+   * @param {string} api_secret secret키 나중 환경변수 변경예정
+   */
   constructor(api_key, api_secret){
     this.api_key = api_key;
     this.api_secret = api_secret;
@@ -23,7 +23,7 @@ class Mymojito{
     }
   }
   /**
-  *토큰 발급함수
+  *토큰을 발급하여 access_token속성 갱신, token.dat파일 생성
   */
   issue_token(){
     var option = {
@@ -53,7 +53,8 @@ class Mymojito{
     });
   }
   /**
-   * 토큰이 있는지 확인하는 함수
+   * 토큰이 없거나 유효기간이 유효한지 확인
+   * @returns {boolean} true | false
    */
   check_access_token(){
     //읽어 보는데
@@ -74,19 +75,17 @@ class Mymojito{
       return false
     }
   }
+  /**
+   * 토큰파일 데이터를 속성으로 불러오기
+   */
   load_access_token(){
     var data = fs.readFileSync('./token.dat','utf-8')
     this.access_token = `Bearer ${JSON.parse(data).access_token}`
     console.log(`토큰읽어옴`);
   }
   /**
+   * 종목코드의 현재가 프로미스객체를 반환
    * @param {string} symbol 종목코드
-   * Promise 객체를 반환한다.
-   * 데이터를 사용하고 싶다면
-   * fetch_price.then((value)=>{
-   *  console.log(value)
-   * })
-   * 위 처럼 value로 값을 받아온다!!
    */
   fetch_price(symbol) {
     var path = "uapi/domestic-stock/v1/quotations/inquire-price";
@@ -108,7 +107,7 @@ class Mymojito{
     return new Promise(function(resolve,reject){
       request(option, function (error, response, body) {
         if (error) throw new Error(error);
-        resolve(body)
+        resolve(JSON.parse(body))
       })
     })
   }
