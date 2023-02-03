@@ -48,6 +48,7 @@ class Mymojito{
 
       fs.writeFile('token.dat',JSON.stringify(token_data),function(err){
         if(err) throw err;
+        console.log(`토큰 갱신`);
       })
     });
   }
@@ -76,6 +77,7 @@ class Mymojito{
   load_access_token(){
     var data = fs.readFileSync('./token.dat','utf-8')
     this.access_token = `Bearer ${JSON.parse(data).access_token}`
+    console.log(`토큰읽어옴`);
   }
   /**
    * @param {string} symbol 종목코드
@@ -115,6 +117,12 @@ class Mymojito{
 
 var app = fs.readFileSync('./app.txt','utf8')
 var secret = fs.readFileSync('./secret.txt','utf8')
+
 var broker = new Mymojito(app,secret)
+
+//토큰을 반복적으로 갱신하는 코드
+setInterval(() => {
+  broker.issue_token()
+}, 1000);
 
 export default broker
