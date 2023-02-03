@@ -19,15 +19,7 @@ class Mymojito{
       this.load_access_token();
     }
     else{
-      //토큰 데이터를 requst로 받은다음 (then) token.dat파일을 생성
-      this.issue_token().then((token_data)=>{
-        this.access_token = `Bearer ${token_data.access_token}`
-        token_data.api_key = this.api_key
-        token_data.api_secret = this.api_secret
-        fs.writeFile('token.dat',JSON.stringify(token_data),function(err){
-          if(err) throw err;})
-        // fs.writeFileSync('token.dat',JSON.stringify(token_data))
-      });
+      this.issue_token();
     }
   }
   /**
@@ -43,12 +35,21 @@ class Mymojito{
         "appsecret": this.api_secret, 
       })
     }
-    return new Promise((resolve,reject)=>{
-      request(option, function (error, response) {
-        if (error) throw new Error(error);
-        resolve(JSON.parse(response.body))
+    request(option, function (error, response) {
+      if (error) throw new Error(error);
+
+      var token_data = JSON.parse(response.body);
+
+      this.access_token = `Bearer ${token_data.access_token}`
+
+      token_data.api_key = this.api_key
+
+      token_data.api_secret = this.api_secret
+
+      fs.writeFile('token.dat',JSON.stringify(token_data),function(err){
+        if(err) throw err;
       })
-    })
+    });
   }
   /**
    * 토큰이 있는지 확인하는 함수
