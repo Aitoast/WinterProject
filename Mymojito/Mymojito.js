@@ -112,6 +112,40 @@ class Mymojito{
       })
     })
   }
+  /**
+   * 30분간 일분봉 조회 메소드 프로미스 반환
+   * @param {string} symbol : 종목코드
+   * @param {string} to : to부터 일분봉조회 ex)123000 => 12시30분~12시까지 조회
+   * @returns Promise객체 반환 then으로 동기화!
+   */
+  _fetch_today_1m_ohlcv(symbol, to){
+    var path = "/uapi/domestic-stock/v1/quotations/inquire-time-itemchartprice"
+    var option = {
+      method: 'GET',
+      url: `${this.base_url}/${path}`,
+      headers : {
+          "content-type": "application/json; charset=utf-8",
+          "authorization": this.access_token,
+          "appKey": this.api_key,
+          "appSecret": this.api_secret,
+          "tr_id": "FHKST03010200",
+          "tr_cont": "",
+      },
+      qs : {
+          "fid_etc_cls_code": "",
+          "fid_cond_mrkt_div_code": "J",
+          "fid_input_iscd": symbol,
+          "fid_input_hour_1": to,
+          "fid_pw_data_incu_yn": "Y"
+      }
+    }
+    return new Promise(function(resolve,reject){
+      request(option, function (error, response, body) {
+        if (error) throw new Error(error);
+        resolve(JSON.parse(body))
+      })
+    })
+  }
 }
 
 
@@ -120,7 +154,7 @@ var secret = fs.readFileSync('./secret.txt','utf8')
 
 var broker = new Mymojito(app,secret)
 
-//토큰을 반복적으로 갱신하는 코드
+// 토큰을 반복적으로 갱신하는 코드
 setInterval(() => {
   broker.issue_token()
 }, 1000);
