@@ -146,6 +146,73 @@ class Mymojito{
       })
     })
   }
+  /**
+   * - 주식당일분봉조회
+   * @param {string} symbol 6자리 종목코드
+   * @param {string} to "HH:MM:00". Defaults to "".
+   */
+  async fetch_today_1m_ohlcv(symbol, to=""){
+    //반환값을 담을 result
+    var result = {}
+    //현재 시각을 문자열로 오후2시30분 => "143000"
+    //to입력을 안했다면 to를 현재 시간으로 설정
+    if(to == ""){
+      var today = new Date()
+      var now = today.getHours()+today.getMinutes()+today.getSeconds()
+      to = now
+    }
+    //종이 끝나는 오후 3시 30분 이후에는 3시30분으로 고정
+    if(to > "153000"){
+      to = "153000"
+    }
+    //최근 30분 일단 output에 담기 (await로 가져올때까지 기다린다.)
+    var output = await this.#fetch_today_1m_ohlcv(symbol, to)
+    //30분 데이터 ouput2에 담기
+    var output2 = output.output2
+    //30분중 마지막 (1분봉) 의 데이터를 last_hour에 할당
+    var last_hour = output2.at(-1).stck_cntg_hour
+    
+    //result에 output1과 ouput2담기 (output 객체를 반복문으로 추가할예정)
+    result.output1 = output.output1
+    result.output2 = output2
+
+    //하루 주식장이 시작되는 오전 9시 까지
+    while(last_hour > "090000"){
+
+      //마지막 시간데이터의 1 분전 시간 dt
+      var dt = this.#Minus_1minute(last_hour)
+
+      // 1분봉 요청
+      output = await this.#fetch_today_1m_ohlcv(symbol, dt)
+      output2 = output.output2
+
+      //last_hour 를 마지막 시간으로 변경
+      last_hour = output2.at(-1).stck_cntg_hour
+
+      //일분봉 배열 확장
+      result.output2 = result.output2.concat(output2)
+      }
+    return result
+  }
+  /**
+   * 1분전 반환함수
+   * @param {string} time 
+   * @returns 1분전 시간
+   */
+  #Minus_1minute( to = "153000"){
+      //만약 1분의 자리가 0이라면
+  if(to.substring(2,4)=="00"){
+    var result = `${to.substring(0,2)-1}59${to.substring(4,6)}`
+    if(to.substring(0,2)<="10"){
+      return `0${result}`
+    }
+    return result
+  }
+  if(to.substring(2,4)<="10"){
+    return `${to.substring(0,2)}0${to.substring(2,4)-1}${to.substring(4,6)}`
+  }
+  return `${to.substring(0,2)}${to.substring(2,4)-1}${to.substring(4,6)}`
+  }
 }
 
 
