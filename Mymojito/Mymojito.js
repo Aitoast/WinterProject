@@ -203,11 +203,13 @@ class Mymojito{
       //만약 1분의 자리가 0이라면
   if(to.substring(2,4)=="00"){
     var result = `${to.substring(0,2)-1}59${to.substring(4,6)}`
+    //앞이 1의 자리라면 0을 붙힌다.
     if(to.substring(0,2)<="10"){
       return `0${result}`
     }
     return result
   }
+  //MM이 10보다 작을때 1을 빼고 앞에 0을 붙혀준다.
   if(to.substring(2,4)<="10"){
     return `${to.substring(0,2)}0${to.substring(2,4)-1}${to.substring(4,6)}`
   }
