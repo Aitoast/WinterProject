@@ -221,6 +221,10 @@ var secret = fs.readFileSync('./secret.txt','utf8')
 
 var broker = new Mymojito(app,secret)
 
+broker.fetch_today_1m_ohlcv("005930","093000").then((response)=>{
+  fs.writeFileSync('./분봉데이터.json',JSON.stringify(response))
+})
+
 // 토큰을 반복적으로 갱신하는 코드
 setInterval(() => {
   broker.issue_token()
