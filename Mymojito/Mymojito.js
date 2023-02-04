@@ -7,8 +7,8 @@ import fs from 'fs';
 class Mymojito{
   /**
    * 속성값들 초기화
-   * @param {string} api_key app키 나중 환경변수 변경예정
-   * @param {string} api_secret secret키 나중 환경변수 변경예정
+   * @param {string} api_key app키 나중 환경변수 변경예정.
+   * @param {string} api_secret secret키 나중 환경변수 변경예정.
    */
   constructor(api_key, api_secret){
     this.api_key = api_key;
@@ -217,7 +217,7 @@ class Mymojito{
   }
 }
 
-
+//클라우드 타입에서는 파일을 읽어오는게 아닌 환경변수로 접근한다.
 var app = fs.readFileSync('./app.txt','utf8')
 var secret = fs.readFileSync('./secret.txt','utf8')
 
@@ -227,7 +227,7 @@ broker.fetch_today_1m_ohlcv("005930","093000").then((response)=>{
   fs.writeFileSync('./분봉데이터.json',JSON.stringify(response))
 })
 
-// 토큰을 반복적으로 갱신하는 코드
+// 토큰을 반복적으로 갱신하는 코드 !!!!인터벌은 변경해야함
 setInterval(() => {
   broker.issue_token()
 }, 1000);
