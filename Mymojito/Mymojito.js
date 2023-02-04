@@ -112,7 +112,8 @@ class Mymojito{
     })
   }
   /**
-   * 30분간 일분봉 조회 메소드 프로미스 반환
+   * - (private) to부터 30분간 일분봉 조회 메소드 프로미스 반환
+   * - output2에는 30,29,28~,1분까지 데이터가 차례로 담겨있음
    * @param {string} symbol : 종목코드
    * @param {string} to : to부터 일분봉조회 ex)123000 => 12시30분~12시까지 조회
    * @returns Promise객체 반환 then으로 동기화!
