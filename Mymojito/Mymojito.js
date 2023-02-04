@@ -118,7 +118,7 @@ class Mymojito{
    * @param {string} to : to부터 일분봉조회 ex)123000 => 12시30분~12시까지 조회
    * @returns Promise객체 반환 then으로 동기화!
    */
-  _fetch_today_1m_ohlcv(symbol, to){
+  #fetch_today_1m_ohlcv(symbol, to){
     var path = "/uapi/domestic-stock/v1/quotations/inquire-time-itemchartprice"
     var option = {
       method: 'GET',
