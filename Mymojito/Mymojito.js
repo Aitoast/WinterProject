@@ -136,7 +136,7 @@ class Mymojito{
           "fid_cond_mrkt_div_code": "J",
           "fid_input_iscd": symbol,
           "fid_input_hour_1": to,
-          "fid_pw_data_incu_yn": "Y"
+          "fid_pw_data_incu_yn": "N"
       }
     }
     return new Promise(function(resolve,reject){
