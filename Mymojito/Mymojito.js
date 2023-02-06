@@ -1,6 +1,37 @@
 import request from 'request';
 import fs from 'fs';
 
+var issue_token_pre = function(){
+  return new Promise((resolve,reject)=>{
+    var option = {
+      method: 'POST',
+      url: `${this.base_url}/oauth2/tokenP`,
+      form : JSON.stringify({ 
+        "grant_type": "client_credentials", 
+        "appkey" : this.api_key, 
+        "appsecret": this.api_secret, 
+      })
+    }
+    request(option, function (error, response) {
+      if (error) throw new Error(error);
+  
+      var token_data = JSON.parse(response.body);
+  
+      this.access_token = `Bearer ${token_data.access_token}`
+  
+      token_data.api_key = this.api_key
+  
+      token_data.api_secret = this.api_secret
+  
+      fs.writeFile('token.dat',JSON.stringify(token_data),function(err){
+        if(err) throw err;
+        console.log(`토큰 갱신`);
+      })
+    })
+  })
+}
+
+
 /**
  * 내가만든 모히토 모듈
  */
