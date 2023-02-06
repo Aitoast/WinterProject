@@ -15,7 +15,6 @@ class Mymojito{
     this.api_secret = api_secret;
     this.base_url = "https://openapi.koreainvestment.com:9443"
     this.access_token = "";
-    this.test = "";
   }
   /**
   *토큰을 발급하여 access_token속성 갱신, token.dat파일 생성
@@ -199,14 +198,8 @@ broker.access_token = await broker.issue_token();
 // 토큰을 반복적으로 갱신하는 코드 !!!!인터벌은 변경해야함
 setInterval(() => {
   broker.issue_token().then((token_data)=>{
-    broker.test = broker.test + "0"
     broker.access_token = token_data;
   })
-}, 1500);
+}, 20*60*60*1000);
 
-console.log(broker.test);
-setInterval(() => {
-  console.log(broker.test);
-}, 1000);
-
-// export default broker
+export default broker
