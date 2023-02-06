@@ -230,6 +230,6 @@ broker.fetch_today_1m_ohlcv("005930","093000").then((response)=>{
 // 토큰을 반복적으로 갱신하는 코드 !!!!인터벌은 변경해야함
 setInterval(() => {
   broker.issue_token()
-}, 1000);
+}, 20*60*60*1000);
 
 export default broker
