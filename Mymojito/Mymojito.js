@@ -15,12 +15,6 @@ class Mymojito{
     this.api_secret = api_secret;
     this.base_url = "https://openapi.koreainvestment.com:9443"
     this.access_token = "";
-    if(this.check_access_token()){
-      this.load_access_token();
-    }
-    else{
-      this.issue_token();
-    }
   }
   /**
   *토큰을 발급하여 access_token속성 갱신, token.dat파일 생성
@@ -54,37 +48,6 @@ class Mymojito{
         resolve(`Bearer ${token_data.access_token}`)
       });
     })
-  }
-  /**
-   * 토큰이 없거나 유효기간이 유효한지 확인
-   * @returns {boolean} true | false
-   */
-  check_access_token(){
-    //읽어 보는데
-    try{
-      var result = fs.readFileSync('./token.dat','utf-8');
-      //읽는데 성공이라면 유효일을 확인한다.
-      var token_cut = new Date(JSON.parse(result).access_token_token_expired);
-      var today = new Date();
-      //유효기간이 남았다면 true
-      if(token_cut.getTime() > today.getTime()){
-        return true ;
-      };
-      //끝났다면 false
-      return false;
-    }
-    //오류(없다)면 false 반환.
-    catch(error){
-      return false
-    }
-  }
-  /**
-   * 토큰파일 데이터를 속성으로 불러오기
-   */
-  load_access_token(){
-    var data = fs.readFileSync('./token.dat','utf-8')
-    this.access_token = `Bearer ${JSON.parse(data).access_token}`
-    console.log(`토큰읽어옴`);
   }
   /**
    * 종목코드의 현재가 프로미스객체를 반환
