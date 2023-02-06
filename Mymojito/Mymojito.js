@@ -124,7 +124,7 @@ class Mymojito{
     //to입력을 안했다면 to를 현재 시간으로 설정
     if(to == ""){
       var today = new Date()
-      var now = today.getHours()+today.getMinutes()+today.getSeconds()
+      var now = `${today.getHours()}${today.getMinutes()}${today.getSeconds()}`
       to = now
     }
     //종이 끝나는 오후 3시 30분 이후에는 3시30분으로 고정
