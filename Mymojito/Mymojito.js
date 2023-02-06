@@ -57,31 +57,34 @@ class Mymojito{
   *토큰을 발급하여 access_token속성 갱신, token.dat파일 생성
   */
   issue_token(){
-    var option = {
-      method: 'POST',
-      url: `${this.base_url}/oauth2/tokenP`,
-      form : JSON.stringify({ 
-        "grant_type": "client_credentials", 
-        "appkey" : this.api_key, 
-        "appsecret": this.api_secret, 
-      })
-    }
-    request(option, function (error, response) {
-      if (error) throw new Error(error);
-
-      var token_data = JSON.parse(response.body);
-
-      this.access_token = `Bearer ${token_data.access_token}`
-
-      token_data.api_key = this.api_key
-
-      token_data.api_secret = this.api_secret
-
-      fs.writeFile('token.dat',JSON.stringify(token_data),function(err){
-        if(err) throw err;
+    return new Promise((resolve,reject)=>{
+      var option = {
+        method: 'POST',
+        url: `${this.base_url}/oauth2/tokenP`,
+        form : JSON.stringify({ 
+          "grant_type": "client_credentials", 
+          "appkey" : this.api_key, 
+          "appsecret": this.api_secret,
+        })
+      }
+      request(option, function (error, response) {
+        if (error) throw new Error(error);
+  
+        var token_data = JSON.parse(response.body);
+  
+        token_data.api_key = this.api_key
+  
+        token_data.api_secret = this.api_secret
+  
+        fs.writeFileSync('token.dat',JSON.stringify(token_data),'utf8')
+        
         console.log(`토큰 갱신`);
-      })
-    });
+
+        this.access_token = `Bearer ${token_data.access_token}`;
+        
+        resolve(`Bearer ${token_data.access_token}`)
+      });
+    })
   }
   /**
    * 토큰이 없거나 유효기간이 유효한지 확인
