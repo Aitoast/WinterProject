@@ -257,6 +257,8 @@ var secret = fs.readFileSync('./secret.txt','utf8')
 
 var broker = new Mymojito(app,secret)
 
+broker.access_token = await broker.issue_token();
+
 broker.fetch_today_1m_ohlcv("005930","093000").then((response)=>{
   fs.writeFileSync('./분봉데이터.json',JSON.stringify(response))
 })
