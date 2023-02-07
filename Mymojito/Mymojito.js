@@ -1,6 +1,5 @@
 import request from 'request';
 import fs from 'fs';
-
 /**
  * 내가만든 모히토 모듈
  */
@@ -15,73 +14,38 @@ class Mymojito{
     this.api_secret = api_secret;
     this.base_url = "https://openapi.koreainvestment.com:9443"
     this.access_token = "";
-    if(this.check_access_token()){
-      this.load_access_token();
-    }
-    else{
-      this.issue_token();
-    }
   }
   /**
   *토큰을 발급하여 access_token속성 갱신, token.dat파일 생성
   */
   issue_token(){
-    var option = {
-      method: 'POST',
-      url: `${this.base_url}/oauth2/tokenP`,
-      form : JSON.stringify({ 
-        "grant_type": "client_credentials", 
-        "appkey" : this.api_key, 
-        "appsecret": this.api_secret, 
-      })
-    }
-    request(option, function (error, response) {
-      if (error) throw new Error(error);
-
-      var token_data = JSON.parse(response.body);
-
-      this.access_token = `Bearer ${token_data.access_token}`
-
-      token_data.api_key = this.api_key
-
-      token_data.api_secret = this.api_secret
-
-      fs.writeFile('token.dat',JSON.stringify(token_data),function(err){
-        if(err) throw err;
+    return new Promise((resolve,reject)=>{
+      var option = {
+        method: 'POST',
+        url: `${this.base_url}/oauth2/tokenP`,
+        form : JSON.stringify({ 
+          "grant_type": "client_credentials", 
+          "appkey" : this.api_key, 
+          "appsecret": this.api_secret,
+        })
+      }
+      request(option, function (error, response) {
+        if (error) throw new Error(error);
+  
+        var token_data = JSON.parse(response.body);
+  
+        token_data.api_key = this.api_key
+  
+        token_data.api_secret = this.api_secret
+  
+        fs.writeFileSync('token.dat',JSON.stringify(token_data),'utf8')
+        
         console.log(`토큰 갱신`);
-      })
-    });
-  }
-  /**
-   * 토큰이 없거나 유효기간이 유효한지 확인
-   * @returns {boolean} true | false
-   */
-  check_access_token(){
-    //읽어 보는데
-    try{
-      var result = fs.readFileSync('./token.dat','utf-8');
-      //읽는데 성공이라면 유효일을 확인한다.
-      var token_cut = new Date(JSON.parse(result).access_token_token_expired);
-      var today = new Date();
-      //유효기간이 남았다면 true
-      if(token_cut.getTime() > today.getTime()){
-        return true ;
-      };
-      //끝났다면 false
-      return false;
-    }
-    //오류(없다)면 false 반환.
-    catch(error){
-      return false
-    }
-  }
-  /**
-   * 토큰파일 데이터를 속성으로 불러오기
-   */
-  load_access_token(){
-    var data = fs.readFileSync('./token.dat','utf-8')
-    this.access_token = `Bearer ${JSON.parse(data).access_token}`
-    console.log(`토큰읽어옴`);
+        this.access_token = `Bearer ${token_data.access_token}`;
+        
+        resolve(`Bearer ${token_data.access_token}`)
+      });
+    })
   }
   /**
    * 종목코드의 현재가 프로미스객체를 반환
@@ -158,41 +122,42 @@ class Mymojito{
     //to입력을 안했다면 to를 현재 시간으로 설정
     if(to == ""){
       var today = new Date()
-      var now = today.getHours()+today.getMinutes()+today.getSeconds()
+      var now = today.getHours().toString()+today.getMinutes().toString()+today.getSeconds().toString()
+      console.log(now)
       to = now
     }
     //종이 끝나는 오후 3시 30분 이후에는 3시30분으로 고정
     if(to > "153000"){
       to = "153000"
     }
+
     //최근 30분 일단 output에 담기 (await로 가져올때까지 기다린다.)
     var output = await this.#fetch_today_1m_ohlcv(symbol, to)
     //30분 데이터 ouput2에 담기
     var output2 = output.output2
+    // console.log(Object.values(output2))
     //30분중 마지막 (1분봉) 의 데이터를 last_hour에 할당
     var last_hour = output2.at(-1).stck_cntg_hour
     
     //result에 output1과 ouput2담기 (output 객체를 반복문으로 추가할예정)
     result.output1 = output.output1
     result.output2 = output2
-
+    // console.log(result.output1)
+    // console.log(result.output2)
     //하루 주식장이 시작되는 오전 9시 까지
     while(last_hour > "090000"){
-
       //마지막 시간데이터의 1 분전 시간 dt
       var dt = this.#Minus_1minute(last_hour)
-
       // 1분봉 요청
+
       output = await this.#fetch_today_1m_ohlcv(symbol, dt)
       output2 = output.output2
-
       //last_hour 를 마지막 시간으로 변경
       last_hour = output2.at(-1).stck_cntg_hour
-
       //일분봉 배열 확장
       result.output2 = result.output2.concat(output2)
       }
-    return result
+    return result.output2
   }
   /**
    * 1분전 반환함수
@@ -216,20 +181,22 @@ class Mymojito{
   return `${to.substring(0,2)}${to.substring(2,4)-1}${to.substring(4,6)}`
   }
 }
-
 //클라우드 타입에서는 파일을 읽어오는게 아닌 환경변수로 접근한다.
 var app = fs.readFileSync('./app.txt','utf8')
 var secret = fs.readFileSync('./secret.txt','utf8')
-
 var broker = new Mymojito(app,secret)
+broker.access_token = await broker.issue_token();
+// broker.fetch_today_1m_ohlcv("005930","090500").then((response)=>{
+  
+  
+// })
 
-broker.fetch_today_1m_ohlcv("005930","093000").then((response)=>{
-  fs.writeFileSync('./분봉데이터.json',JSON.stringify(response))
-})
 
 // 토큰을 반복적으로 갱신하는 코드 !!!!인터벌은 변경해야함
 setInterval(() => {
-  broker.issue_token()
+  broker.issue_token().then((token_data)=>{
+    broker.access_token = token_data;
+  })
 }, 20*60*60*1000);
 
 export default broker
