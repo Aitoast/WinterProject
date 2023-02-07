@@ -137,25 +137,30 @@ class Mymojito {
     var output = await this.#fetch_today_1m_ohlcv(symbol, to);
     //30분 데이터 ouput2에 담기
     var output2 = output.output2;
-    // console.log(Object.values(output2))
-    //30분중 마지막 (1분봉) 의 데이터를 last_hour에 할당
-    var last_hour = output2.at(-1).stck_cntg_hour;
 
-    //result에 output1과 ouput2담기 (output 객체를 반복문으로 추가할예정)
-    result.output1 = output.output1;
+    //[{},{},{}] => [[],[],[]] 형변환!
+    output2 = output2.map((element)=>{
+      return Object.values(element)
+    })
+
+    //30분중 마지막 (1분봉) 의 시간 데이터를 last_hour에 할당
+    var last_hour = output2.at(-1).at(1);
+
+    //result에 ouput2담기 (output2 배열을 반복문으로 추가할예정)
     result.output2 = output2;
-    // console.log(result.output1)
-    // console.log(result.output2)
     //하루 주식장이 시작되는 오전 9시 까지
     while (last_hour > "090000") {
       //마지막 시간데이터의 1 분전 시간 dt
       var dt = this.#Minus_1minute(last_hour);
       // 1분봉 요청
-
       output = await this.#fetch_today_1m_ohlcv(symbol, dt);
       output2 = output.output2;
+      //[{},{},{}] => [[],[],[]] 형변환!
+      output2 = output2.map((element)=>{
+        return Object.values(element)
+      })
       //last_hour 를 마지막 시간으로 변경
-      last_hour = output2.at(-1).stck_cntg_hour;
+      last_hour = output2.at(-1).at(1);
       //일분봉 배열 확장
       result.output2 = result.output2.concat(output2);
     }
