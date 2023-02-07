@@ -159,7 +159,7 @@ class Mymojito {
       //일분봉 배열 확장
       result.output2 = result.output2.concat(output2);
     }
-    return result;
+    return result.output2;
   }
   /**
    * 1분전 반환함수
