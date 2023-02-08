@@ -81,13 +81,9 @@ server.post("/", (req, res) => {
            */
           var cha = `INSERT INTO solodb.chartdata values ?;`;
           connection.query(cha, [b], function (err, results) {
-            if (err) {
-              console.log(err);
-              connection.end();
-            } else {
-              console.log("save succesfully");
-              connection.end();
-            }
+            if (err) console.log(err);
+            else console.log("save succesfully");            
+            connection.end();
           });
         });
     }
