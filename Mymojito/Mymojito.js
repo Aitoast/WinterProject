@@ -114,6 +114,7 @@ class Mymojito {
    * - 주식당일분봉조회
    * @param {string} symbol 6자리 종목코드
    * @param {string} to "HH:MM:00". Defaults to "".
+   * @return {Array} 2차원배열을 반환한다.
    */
   async fetch_today_1m_ohlcv(symbol, to = "") {
     //반환값을 담을 result
