@@ -45,18 +45,21 @@ server.post("/", (req, res) => {
     else {
       console.log(stockcode[0]["단축코드"]);
       broker.fetch_price(stockcode[0]["단축코드"]).then(function (stocka) {
-        // 뽑아온 정보를 1행 테이블로 sql에 저장
+        // 뽑아온 정보를 열이1개인 테이블로 sql에 저장
         let del = `DELETE FROM solodb.stockinfo; `; // 원래 테이블을 초기화 시키는 명령문
         connection.query(del, function (err, results) {
           if (err) console.log(err);
           else console.log("delete succesfully");
         });
-        let savein = `INSERT INTO solodb.stockinfo SET ?; `; // 주식 정보를 table에 넣는 명령문
+
+        // 주식 정보를 table에 넣는 명령문
+        let savein = `INSERT INTO solodb.stockinfo SET ?; `; 
         connection.query(savein, stocka, function (err, results) {
           if (err) console.log(err); 
           else console.log("save succesfully");
         });
       });
+      
       broker
         .fetch_today_1m_ohlcv(stockcode[0]["단축코드"], "")
         .then(function (mindata) {
