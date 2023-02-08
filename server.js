@@ -60,16 +60,8 @@ server.post("/", (req, res) => {
       broker
         .fetch_today_1m_ohlcv(stockcode[0]["단축코드"], "")
         .then(function (mindata) {
-          // 데이터를 2차원 배열로 바꿈
-          var b = [];
-          for (const value of mindata) {
-            var a = [];
-
-            for (const valued of Object.values(value)) {
-              a.push(valued);
-            }
-            b.push(a);
-          }
+          // 데이터는 2차원배열로 받음
+          var b = mindata;
           var del2 = `DELETE FROM solodb.chartdata;`; //원래 테이블을 초기화 해주는 명령문
           connection.query(del2, function (err, results) {
             if (err) console.log(err);
