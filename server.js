@@ -60,15 +60,23 @@ server.post("/", (req, res) => {
       broker
         .fetch_today_1m_ohlcv(stockcode[0]["단축코드"], "")
         .then(function (mindata) {
-          // 데이터는 2차원배열로 받음
+          // 데이터는 2차원배열로 받아 b에 넣는다.
           var b = mindata;
-          var del2 = `DELETE FROM solodb.chartdata;`; //원래 테이블을 초기화 해주는 명령문
+
+          //원래 테이블을 초기화 해주는 명령문
+          var del2 = `DELETE FROM solodb.chartdata;`; 
           connection.query(del2, function (err, results) {
             if (err) console.log(err);
             else console.log("delete succesfully");
           });
-          //주식 일 분봉을 시간까지 정해서 db에 데이터 저장
-          var cha = `INSERT INTO solodb.chartdata(stck_bsop_date, stck_cntg_hour, stck_prpr, stck_oprc, stck_hgpr, stck_lwpr, cntg_vol, acml_tr_pbmn) values ?;`;
+
+          /**
+           * 주식 일 분봉을 시간까지 정해서 db에 데이터 저장  
+           * 쿼리문에서 데이터 갯수가 맞다면 컬럼이름없이 insert문을 사용할수있음
+           * 쿼리문 ? 포맷팅 내용은 이원찬 노션 공유 페이지에 정리 해놨음
+           * 2차원배열인 b를 왜 3차원 배열로 query메소드에 넣는지도 노션에 정리해놨음
+           */
+          var cha = `INSERT INTO solodb.chartdata values ?;`;
           connection.query(cha, [b], function (err, results) {
             if (err) {
               console.log(err);
