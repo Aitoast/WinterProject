@@ -1,32 +1,159 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="../css/style.css">
     <title>Winter-Project</title>
     <meta charset="UTF-8">
 </head>
 <body>
-    <div class="title">
-        <div class="title__box">
-            <h1 class="title__box__name">제목</h1>
-        </div>
-        <div class="title__search">
-            <input type="search-text" value="enter the stock name">
-            <button><i class="fa-solid fa-magnifying-glass"></i></button>
+    <div class="top">
+        <div class="title">
+            <div class="title__box">
+                <h1 class="title__box__name">Stock File Stockholm</h1>
+            </div>
+            <div class="title__search">
+                <input type="text" placeholder="enter the stock name">
+                <button class="stock-search"><i class="fa-solid fa-magnifying-glass"></i></button>
+            </div>
         </div>
     </div>
     <div class="underbox">
-        <div class="underbox__stockindex">
-            <p>특정 주식 목록</p>
+        <div>
+            <div class="underbox__stockindex">
+                <a id="underbox-display-link">
+                    <i class="fa-solid fa-circle-info"></i>
+                    Simple interface
+                </a>
+                <main class="underbox__screen">
+                    <div class="stock-component">
+                        <div class="stock-component__column">
+                            <img 
+                            src="../image/ko.png"
+                            class="stock-component__avatar"
+                            />
+                            <div class="stock-component__text">
+                                <h4 class="stock-component__title">Korea</h4>
+                                <!-- <h6 class="stock-component__subtitle">this text whatever</h6> -->
+                            </div>
+                        </div>
+                        <div class="stock-component__column"></div>
+                    </div>
+                    <div class="underbox-screen__channel">
+                        <div class="underbox-screen__channel-header">
+                            <span>Stock</span>
+                        </div>
+                        <div class="stock-component">
+                            <div class="stock-component__column">
+                                <div class="stock-component__text">
+                                    <h4 class="stock-component__title--sm">index</h4>
+                                </div>
+                            </div>
+                            <div class="stock-component__column">
+                                <i class="fa-solid fa-chevron-right fs-sm"></i>
+                            </div>
+                        </div>
+                        <div class="stock-component">
+                            <div class="stock-component__column">
+                                <div class="stock-component__text">
+                                    <h4 class="stock-component__title--sm">index</h4>
+                                </div>
+                            </div>
+                            <div class="stock-component__column">
+                                <i class="fa-solid fa-chevron-right fs-sm"></i>
+                            </div>
+                        </div>
+                        <div class="stock-component">
+                            <div class="stock-component__column">
+                                <div class="stock-component__text">
+                                    <h4 class="stock-component__title--sm">index</h4>
+                                </div>
+                            </div>
+                            <div class="stock-component__column">
+                                <i class="fa-solid fa-chevron-right fs-sm"></i>
+                            </div>
+                        </div>
+                        <div class="stock-component">
+                            <div class="stock-component__column">
+                                <div class="stock-component__text">
+                                    <h4 class="stock-component__title--sm">index</h4>
+                                </div>
+                            </div>
+                            <div class="stock-component__column">
+                                <i class="fa-solid fa-chevron-right fs-sm"></i>
+                            </div>
+                        </div>
+                        <div class="stock-component">
+                            <div class="stock-component__column">
+                                <div class="stock-component__text">
+                                    <h4 class="stock-component__title--sm">index</h4>
+                                </div>
+                            </div>
+                            <div class="stock-component__column">
+                                <i class="fa-solid fa-chevron-right fs-sm"></i>
+                            </div>
+                        </div>
+                        <div class="stock-component">
+                            <div class="stock-component__column">
+                                <div class="stock-component__text">
+                                    <h4 class="stock-component__title--sm">index</h4>
+                                </div>
+                            </div>
+                            <div class="stock-component__column">
+                                <i class="fa-solid fa-chevron-right fs-sm"></i>
+                            </div>
+                        </div>
+                        <div class="stock-component">
+                            <div class="stock-component__column">
+                                <div class="stock-component__text">
+                                    <h4 class="stock-component__title--sm">index</h4>
+                                </div>
+                            </div>
+                            <div class="stock-component__column">
+                                <i class="fa-solid fa-chevron-right fs-sm"></i>
+                            </div>
+                        </div>
+                        <div class="stock-component">
+                            <div class="stock-component__column">
+                                <div class="stock-component__text">
+                                    <h4 class="stock-component__title--sm">index</h4>
+                                </div>
+                            </div>
+                            <div class="stock-component__column">
+                                <i class="fa-solid fa-chevron-right fs-sm"></i>
+                            </div>
+                        </div>
+                        <div class="stock-component">
+                            <div class="stock-component__column">
+                                <div class="stock-component__text">
+                                    <h4 class="stock-component__title--sm">index</h4>
+                                </div>
+                            </div>
+                            <div class="stock-component__column">
+                                <i class="fa-solid fa-chevron-right fs-sm"></i>
+                            </div>
+                        </div>
+                    </div>
+                </main>
+            </div>
         </div>
         <div class="underbox__main">
-            <div class="underbox__main__index">
-                <p>주석 정보의 제목과 현제가</p>
-            </div>
-            <div class="underbox__main__graph">
-                <p>그래프 들어갈 공간</p>
-            </div>
-            <div class="underbox__main__chart">
+            <div>
+                <div class="underbox__main__index">
+                    <div class="underbox__main__index__result">
+                        <span>주식 정보의 제목과 현재가</span>
+                    </div>
+                    
+                </div>
+                <div class="underbox__main__graph">
+                    <div>
+                        <div></div>
+                        <div></div>
+                        <div></div>
+                        <div></div>
+                    </div>
+                </div>
+                <div class="underbox__main__chart">
+                </div>
             </div>
         </div>
     </div>
