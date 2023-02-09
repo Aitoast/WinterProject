@@ -5,6 +5,7 @@ import bodyParser from "body-parser";
 import { createConnection } from "mysql";
 import broker from "./Mymojito/Mymojito.js";
 import fs from "fs";
+import {} from "./symbol_fetch/symbol_fetch.js"
 
 const stock_1m_columns = [
   "stck_bsop_date",
