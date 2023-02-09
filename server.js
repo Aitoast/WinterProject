@@ -40,11 +40,13 @@ server.post("/", (req, res) => {
 
   //입력정보로 종목코드를 뽑아오는 sql 명령문
   let sql = `SELECT 단축코드 FROM solodb.stock WHERE 한글명="${stock_kr_string}";`;
-  connection.query(sql, function (err, stockcode) {
+  connection.query(sql, function (err, respone) {
     if (err) console.log(err);
     else {
-      console.log(stockcode[0]["단축코드"]);
-      broker.fetch_price(stockcode[0]["단축코드"]).then(function (stocka) {
+      /** 종목코드 */
+      const stock_code = respone[0]["단축코드"];
+      console.log(stock_code);
+      broker.fetch_price(stock_code).then(function (stocka) {
         // 여러 사용자가 데이터를 입력할 때 한 테이블에 쓰면 충돌이 발생할 것이기 때문에
         // 주식마다 주식정보, 분봉 테이블을 생성시킨다. 존재할 시 데이터 바로 입력
         let make = `CREATE TABLE solodb.${stock_kr_string}info ( 
@@ -152,7 +154,7 @@ server.post("/", (req, res) => {
       });
 
       broker
-        .fetch_today_1m_ohlcv(stockcode[0]["단축코드"], "")
+        .fetch_today_1m_ohlcv(stock_code, "")
         .then(function (mindata) {
           // 데이터는 2차원배열로 받아 b에 넣는다.
           var b = mindata;
