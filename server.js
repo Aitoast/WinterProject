@@ -1,5 +1,4 @@
 import express from "express";
-import cors from "cors";
 import path from "path";
 import { fileURLToPath } from "url";
 import bodyParser from "body-parser";
@@ -17,7 +16,6 @@ server.listen(3000, (err) => {
   console.log("The server is listening on port 3000");
 });
 
-server.use(cors());
 server.use(bodyParser.urlencoded({ extended: true }));
 
 //초기 화면 불러오기
