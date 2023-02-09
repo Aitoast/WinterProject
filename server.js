@@ -58,6 +58,7 @@ server.post("/", (req, res) => {
       /** 종목코드 */
       const stock_code = respone[0]["단축코드"];
       console.log(stock_code);
+      //검색한 종목의 정보를 데이터 베이스에 저장하기
       broker.fetch_price(stock_code).then(
         /** @param {Object} stock_info fetch_price로 가져온 Object형 변수*/
         function (stock_info) {
@@ -67,6 +68,7 @@ server.post("/", (req, res) => {
           ${Object.keys(stock_info).join(` VARCHAR(50),
           `)} VARCHAR(50)
           );`;
+          //테이블 생성
           connection.query(create_sql, function (err, results) {
             //만약 create문이 에러라면 테이블을 초기화(삭제)한다.
             if (err) {
@@ -87,6 +89,7 @@ server.post("/", (req, res) => {
         }
       );
 
+      //검색한 종목의 분봉데이터를 데이터 베이스에 저장하기
       broker.fetch_today_1m_ohlcv(stock_code, "").then(
         /** @param {Array<Array<string>>} mindata 분봉데이터 2차원배열*/
         function (mindata) {
@@ -94,6 +97,7 @@ server.post("/", (req, res) => {
             ${stock_1m_columns.join(` VARCHAR(50),
             `)} VARCHAR(50)
             );`;
+          //테이블 생성
           connection.query(create_sql, function (err, results) {
             //create문이 에러라면 테이블 초기화
             if (err) {
@@ -106,7 +110,7 @@ server.post("/", (req, res) => {
             } else console.log("create table succesfully");
             //테이블 생성,초기화 이후 데이터 저장
             var insert_sql = `INSERT INTO ${stock_kr_string}분봉 values ?;`;
-            //주식 일 분봉을 시간까지 정해서 db에 데이터 저장
+            //db에 데이터 저장
             connection.query(insert_sql, [mindata], function (err, results) {
               if (err) console.log(err);
               else console.log("save succesfully");
