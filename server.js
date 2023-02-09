@@ -137,19 +137,12 @@ server.post("/", (req, res) => {
               if (err) console.log(err);
               else console.log("delete succesfully");
             });
-            let save = `INSERT INTO solodb.${stock_kr_string}info SET ?;`;
-            connection.query(save, stocka, function (err, results) {
-              if (err) console.log(err);
-              else console.log("save succesfully");
-            });
-          } else {
-            console.log("create table succesfully");
+          } else console.log("create table succesfully");
             let savein = `INSERT INTO solodb.${stock_kr_string}info SET ?;`;
             connection.query(savein, stocka, function (err, results) {
               if (err) console.log(err);
               else console.log("save succesfully");
             });
-          }
         });
       });
 
@@ -175,30 +168,15 @@ server.post("/", (req, res) => {
                 if (err) console.log(err);
                 else console.log("delete succesfully");
               });
-              var cha = `INSERT INTO ${stock_kr_string}분봉 values ?;`;
-              connection.query(cha, [b], function (err, results) {
-                if (err) console.log(err);
-                else console.log("save succesfully");
-                connection.end();
-              });
-            } else {
-                /**
-           * 주식 일 분봉을 시간까지 정해서 db에 데이터 저장
-           * 쿼리문에서 데이터 갯수가 맞다면 컬럼이름없이 insert문을 사용할수있음
-           * 쿼리문 ? 포맷팅 내용은 이원찬 노션 공유 페이지에 정리 해놨음
-           * 2차원배열인 b를 왜 3차원 배열로 query메소드에 넣는지도 노션에 정리해놨음
-           */
-              console.log("create table succesfully");
-              var cha = `INSERT INTO ${stock_kr_string}분봉 values ?;`;
-              connection.query(cha, [b], function (err, results) {
-                if (err) console.log(err);
-                else console.log("save succesfully");
-                connection.end();
-              });
-            }
+            } else console.log("create table succesfully");
+            var cha = `INSERT INTO ${stock_kr_string}분봉 values ?;`;
+            connection.query(cha, [b], function (err, results) {
+              if (err) console.log(err);
+              else console.log("save succesfully");
+              connection.end();
+            });
           });
-        
         });
-    }
+      }
+    });    
   });
-});
