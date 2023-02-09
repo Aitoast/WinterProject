@@ -25,8 +25,10 @@ server.get("/", (req, res) => {
 
 // post로 검색창의 입력값 받아오기
 server.post("/", (req, res) => {
+  /** 종목 한글명 */
+  const stock_kr_string = req.body.stock;
   //입력값 확인용 코드 추후 삭제하고 sendFile 함수 사용 예정
-  res.send(`<span>${req.body.stock}</span>`);
+  res.send(`<span>${stock_kr_string}</span>`);
 
   const conn = JSON.parse(fs.readFileSync("SoloData/SoloData.json"));
   let connection = createConnection(conn); // DB 커넥션 생성
@@ -37,7 +39,7 @@ server.post("/", (req, res) => {
   });
 
   //입력정보로 종목코드를 뽑아오는 sql 명령문
-  let sql = `SELECT 단축코드 FROM solodb.stock WHERE 한글명="${req.body.stock}";`;
+  let sql = `SELECT 단축코드 FROM solodb.stock WHERE 한글명="${stock_kr_string}";`;
   connection.query(sql, function (err, stockcode) {
     if (err) console.log(err);
     else {
@@ -45,7 +47,7 @@ server.post("/", (req, res) => {
       broker.fetch_price(stockcode[0]["단축코드"]).then(function (stocka) {
         // 여러 사용자가 데이터를 입력할 때 한 테이블에 쓰면 충돌이 발생할 것이기 때문에
         // 주식마다 주식정보, 분봉 테이블을 생성시킨다. 존재할 시 데이터 바로 입력
-        let make = `CREATE TABLE solodb.${req.body.stock}info ( 
+        let make = `CREATE TABLE solodb.${stock_kr_string}info ( 
           iscd_stat_cls_code VARCHAR(50),
           marg_rate  VARCHAR(50),
           rprs_mrkt_kor_name VARCHAR(50),
@@ -128,19 +130,19 @@ server.post("/", (req, res) => {
           );`;
         connection.query(make, function (err, results) {
           if (err) {
-            let del = `DELETE FROM solodb.${req.body.stock}info; `; // 원래 테이블을 초기화 시키는 명령문
+            let del = `DELETE FROM solodb.${stock_kr_string}info; `; // 원래 테이블을 초기화 시키는 명령문
             connection.query(del, function (err, results) {
               if (err) console.log(err);
               else console.log("delete succesfully");
             });
-            let save = `INSERT INTO solodb.${req.body.stock}info SET ?;`;
+            let save = `INSERT INTO solodb.${stock_kr_string}info SET ?;`;
             connection.query(save, stocka, function (err, results) {
               if (err) console.log(err);
               else console.log("save succesfully");
             });
           } else {
             console.log("create table succesfully");
-            let savein = `INSERT INTO solodb.${req.body.stock}info SET ?;`;
+            let savein = `INSERT INTO solodb.${stock_kr_string}info SET ?;`;
             connection.query(savein, stocka, function (err, results) {
               if (err) console.log(err);
               else console.log("save succesfully");
@@ -154,7 +156,7 @@ server.post("/", (req, res) => {
         .then(function (mindata) {
           // 데이터는 2차원배열로 받아 b에 넣는다.
           var b = mindata;
-          var makemin = `CREATE TABLE solodb.${req.body.stock}분봉( 
+          var makemin = `CREATE TABLE solodb.${stock_kr_string}분봉( 
             stck_bsop_date VARCHAR(50),
               stck_cntg_hour VARCHAR(50),
               stck_prpr VARCHAR(50),
@@ -166,12 +168,12 @@ server.post("/", (req, res) => {
             );`;
           connection.query(makemin, function (err, results) {
             if (err) {
-              let del = `DELETE FROM solodb.${req.body.stock}분봉; `; // 원래 테이블을 초기화 시키는 명령문
+              let del = `DELETE FROM solodb.${stock_kr_string}분봉; `; // 원래 테이블을 초기화 시키는 명령문
               connection.query(del, function (err, results) {
                 if (err) console.log(err);
                 else console.log("delete succesfully");
               });
-              var cha = `INSERT INTO ${req.body.stock}분봉 values ?;`;
+              var cha = `INSERT INTO ${stock_kr_string}분봉 values ?;`;
               connection.query(cha, [b], function (err, results) {
                 if (err) console.log(err);
                 else console.log("save succesfully");
@@ -185,7 +187,7 @@ server.post("/", (req, res) => {
            * 2차원배열인 b를 왜 3차원 배열로 query메소드에 넣는지도 노션에 정리해놨음
            */
               console.log("create table succesfully");
-              var cha = `INSERT INTO ${req.body.stock}분봉 values ?;`;
+              var cha = `INSERT INTO ${stock_kr_string}분봉 values ?;`;
               connection.query(cha, [b], function (err, results) {
                 if (err) console.log(err);
                 else console.log("save succesfully");
