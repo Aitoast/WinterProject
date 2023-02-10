@@ -1,10 +1,6 @@
 import express from "express";
-const app = express()
-const port = 3000
+import fs from 'fs';
 
-app.get('/', (req, res) => {
-  res.send('Hello World!')
-})
 //html 템플릿 생성
 var html = {
   //홈페이지는 css, script를 읽은뒤 html 문자열을 반환함
@@ -18,7 +14,15 @@ var html = {
   }
 }
 
+const app = express()
+const port = 3000
 
+app.get("/", (req, res) => {
+  res.send(html.hompage(
+    fs.readFileSync('./chart.css','utf8'),
+    fs.readFileSync('./chart.js','utf8'))
+  );
+});
 
 app.listen(port, () => {
   console.log(`Example app listening on port ${port}`)
