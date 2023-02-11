@@ -18,56 +18,16 @@
         </form>
     </nav>
     <!-- 밑 언더박스-->
-    <div class="underbox">
-        <div class="underbox__main">
-            <div>
-                <div class="underbox__main__index">
-                    <div class="underbox__main__index__result">
-                        <span class="stock-name">주식 이름</span>
-                        <div class="table-box">
-                            <table border="1">
-                                <thead>
-                                    <tr>
-                                        <th>제목</th> <th>제목</th> <th>제목</th><th>제목</th> <th>제목</th> <th>제목</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    <tr>
-                                        <td>1행 1열</td>
-                                        <td>1행 2열</td>
-                                        <td>1행 3열</td>
-                                        <td>1행 4열</td>
-                                        <td>1행 5열</td>
-                                        <td>1행 6열</td>
-                                    </tr>
-                                    <tr>
-                                        <td>2행 1열</td>  
-                                        <td>2행 2열</td>   
-                                        <td>2행 3열</td>
-                                        <td>2행 4열</td>  
-                                        <td>2행 5열</td>   
-                                        <td>2행 6열</td>    
-                                    </tr>
-                                </tbody>
-                            </table>
-                        </div>
-                    </div>
-                    
-                </div>
-                <div class="underbox__main__graph">
-                    <div>
-                        <div></div>
-                        <div></div>
-                        <div></div>
-                        <div></div>
-                    </div>
-                </div>
-                <div class="underbox__main__chart">
-                </div>
-            </div>
+    <underbox class="underbox">
+        <!-- 현재가, 주식 이름등이 들어갈 자리 -->
+        <div class="underbox__main__index">
+            <p class="stock-name">주식 이름</p>
         </div>
-    </div>
-    <script src="https://kit.fontawesome.com/74cda243c9.js" crossorigin="anonymous">
-    </script>
+        <!-- 그래프가 들어갈 div태그 -->
+        <div class="underbox__main__graph">
+        </div>
+        <!-- 검색한 주식의 정보가 들어갈 div태그 -->
+        <div></div>
+    </underbox>
 </body>
 </html>

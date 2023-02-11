@@ -1,56 +1,24 @@
 .underbox {
     display: flex;
+    flex-direction: column;
     margin: 30px 0px;
     border: 3px solid black;
-    height: 100vh;
+    height: auto;
 }
 
-
-.underbox__main {
-    width: 1200px;
-    height: 650px;
-    margin: 20px 20px;
-    border: 2px solid black;
-    justify-content: center;
-    align-items: center;
-    font-weight: 600;
-}
 .underbox__main__index {
     padding: 5px 5px;
     margin: 20px 20px;
-    width: 1000px;
+    width: auto;
     height: 60px;
-    text-align: left;
     border: 1px solid black;
     border-radius: 8px;
 }
 .underbox__main__graph {
     padding: 10px 10px;
     margin: 20px 20px;
-    width: 1000px;
+    width: auto;
     height: 500px;
     border: 1px solid black
     ;
-}
-
-.underbox__main__index__result {
-    display: flex;
-    justify-content: center;
-    padding: 10px 10px;
-}
-
-.table-box {
-    margin-left: 50px;
-}
-
-.underbox__main__index__result table {
-    border: 2px solid black;
-}
-
-.underbox__main__index__result table th,tr{
-    border: 1px solid black;
-}
-
-.underbox__main__index__result table td {
-    border: 1px solid rgba(0,0,0,0.5);
 }
