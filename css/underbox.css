@@ -29,5 +29,28 @@
     margin: 20px 20px;
     width: 1000px;
     height: 500px;
+    border: 1px solid black
+    ;
+}
+
+.underbox__main__index__result {
+    display: flex;
+    justify-content: center;
+    padding: 10px 10px;
+}
+
+.table-box {
+    margin-left: 50px;
+}
+
+.underbox__main__index__result table {
+    border: 2px solid black;
+}
+
+.underbox__main__index__result table th,tr{
     border: 1px solid black;
+}
+
+.underbox__main__index__result table td {
+    border: 1px solid rgba(0,0,0,0.5);
 }

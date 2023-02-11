@@ -11,6 +11,7 @@
     justify-content: space-between;
 }
 .title__box {
+    padding: 5px 10px;
     width: 300px;
     height: 150px;
 }
@@ -20,6 +21,22 @@
     text-align: center;
     font-size: 45px;
     color: white;
+    position: relative;
+}
+
+.title__line {
+    position: absolute;
+    border: 3px solid white;
+    width: 300px;
+    bottom: -10px;
+}
+
+.title__line__next {
+    position: absolute;
+    border: 1px solid white;
+    width: 800px;
+    left: 220px;
+    bottom: -10px;
 }
 
 .title__search {
