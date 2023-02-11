@@ -34,7 +34,7 @@ server.use(bodyParser.urlencoded({ extended: true }));
 
 //초기 화면 불러오기
 server.get("/", (req, res) => {
-  res.sendFile(__dirname + "/HTML/start.html");
+  res.sendFile(__dirname + "/HTML/home.html");
 });
 
 
