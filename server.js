@@ -34,7 +34,7 @@ server.use(bodyParser.urlencoded({ extended: true }));
 
 //초기 화면 불러오기
 server.get("/", (req, res) => {
-  res.sendFile(__dirname + "/HTML/home.html");
+  res.sendFile(__dirname + "/HTML/start.html");
 });
 
 
@@ -141,5 +141,19 @@ server.post("/", (req, res) => {
       );
     }
   });  
+  }); 
+  let chart_data =`SELECT stck_prpr, prdy_ctrt, stck_oprc, stck_hgpr, stck_lwpr FROM ${stock_kr_string}info;`
+  connection.query(chart_data,function(err,respone){
+    if(err) console.log(err)
+    else {
+      console.log(respone[0]["stck_prpr"],respone[0]["stck_hgpr"])
+      
+    }
+  })
 });
 
+// stck_prpr 주식 현재가
+// prdy_ctrt 전일대비 퍼센트
+// stck_oprc 주식 시가
+// stck_hgpr 주식 최고가
+// stck_lwpr 주식 최저가
