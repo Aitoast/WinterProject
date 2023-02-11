@@ -22,26 +22,17 @@
 
 .title__search {
     display: flex;
-    width: 700px;
-    height: 40px;
-    margin: 100px 0 0 150px;
-    border: 1px solid black;
+    justify-content: end;
+    align-items: end;
+    height: 100%;
+    width: 100%;
 }
 
 .title__search input{
-    justify-content: space-between;
-    width: 600px;
     height: 40px;
+    width: 70%;
+    min-width: 200px;
     border-radius: 5px;
-    padding: 0 30px 0 10px;
     border-style: none;
     border-bottom: 1px solid black;
-}
-.title__search button{
-    background-color: none;
-    width: 40px;
-    height: 40px;
-    border-radius: 3px;
-    border-style: none;
-    color: rgba(0, 0, 0, 0.5);
 }
