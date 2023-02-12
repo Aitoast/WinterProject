@@ -220,7 +220,7 @@ var html = {
 
 //초기 화면 불러오기
 server.get("/", (req, res) => {
-  res.send(html.hompage([fs.readFileSync("./css/title.css", "utf8")]));
+  res.send(html.hompage(css_list));
 });
 
 // post로 검색창의 입력값 받아오기
@@ -245,7 +245,7 @@ server.post("/", (req, res) => {
       if (respone.length == 0) {
         console.log(respone);
         res.send(
-          html.not_found_page([fs.readFileSync("./css/title.css", "utf8")])
+          html.not_found_page(css_list)
         );
       } else {
         /** 종목코드 */
