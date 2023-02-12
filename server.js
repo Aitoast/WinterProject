@@ -18,6 +18,12 @@ const stock_1m_columns = [
   "acml_tr_pbmn",
 ];
 
+const css_list = [fs.readFileSync('./css/title.css','utf8'),
+fs.readFileSync('./css/underbox.css','utf8')]
+
+
+var time_list = fs.readFileSync('./date.txt','utf8').split(',')
+
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 const server = express();
