@@ -219,13 +219,15 @@ server.post("/", (req, res) => {
   });
 
   /**입력정보로 종목코드를 뽑아오는 sql 명령문*/
-  let select_sql = `SELECT 단축코드 FROM stock WHERE 한글명="${stock_kr_string}";`;
+  var select_sql = `SELECT 단축코드 FROM stock WHERE 한글명="${stock_kr_string}";`;
   connection.query(select_sql, function (err, respone) {
     if (err) console.log(err);
     else {
-      //사용자가 없는 종목을 입력했을때
-      if(respone.length==0)
-      res.send(html.not_found_page([fs.readFileSync('./css/title.css','utf8')]))
+      //사용자가 없는 종목을 입력했을때 == select문의 결과가 빈배열일때
+      if(respone.length==0){
+        console.log(respone);
+        res.send(html.not_found_page([fs.readFileSync('./css/title.css','utf8')]))
+      }
       else{
         /** 종목코드 */
         const stock_code = respone[0]["단축코드"];
