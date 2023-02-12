@@ -31,35 +31,49 @@ server.listen(port, (err) => {
 server.use(bodyParser.urlencoded({ extended: true }));
 
 
+//html 템플릿 생성
+var html = {
+  /**
+   * 홈페이지는 css를 배열로 받은뒤 html 문자열을 반환함*/
+  hompage : function(css_list = []){
+    var css = '';
+    css_list.map((css_element)=>{
+      css += `<style>${css_element}</style>`
+    })
+    return `<!DOCTYPE html>
+  <html lang="en">
+  <head>
+  ${css}
+      <title>Winter-Project</title>
+      <meta charset="UTF-8">
+      <script src="https://code.highcharts.com/highcharts.js"></script>
+  </head>
+  <body>
+      <!-- 제목과 검색창이있는 top태그 -->
+      <nav class="top">
+          <!-- 제목이 적혀있는 h1태그 -->
+          <h1 class="title__box__name">Stock File<br>Stockholm
+              <line class="title__line"></line>
+          </h1>
+          <!-- 검색창이 있는 form태그 -->
+          <form class="title__search" method="post">
+              <input type="text" placeholder="enter the stock name">
+          </form>
+      </nav>
+    </body>
+    </html>`},
 
 //초기 화면 불러오기
 server.get("/", (req, res) => {
-  res.sendFile(__dirname + "/HTML/start.html");
+  res.send(html.hompage([fs.readFileSync('./css/title.css','utf8')]));
 });
 
 
-//html 템플릿 생성
-var html = {
-  //홈페이지는 css, script를 읽은뒤 html 문자열을 반환함
-  hompage : function(css,script){
-    return `<style>
-    ${css}
-  </style>
-  <script src="https://code.highcharts.com/highcharts.js"></script>
-  <div id="container"></div>
-  <script>${script}</script>`
-  }
-}
 
 // post로 검색창의 입력값 받아오기
 server.post("/", (req, res) => {
   /** 종목 한글명 */
   const stock_kr_string = req.body.stock;
-  //입력값 확인용 코드 추후 삭제하고 sendFile 함수 사용 예정
-  res.send(html.hompage(
-    fs.readFileSync('간단한html띄우는서버/chart.css','utf8'),
-    fs.readFileSync('간단한html띄우는서버/chart.js','utf8'))
-  );
 
   const conn = JSON.parse(fs.readFileSync("SoloData/SoloData.json"));
   let connection = createConnection(conn); // DB 커넥션 생성
