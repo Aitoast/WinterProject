@@ -62,6 +62,105 @@ var html = {
       </nav>
     </body>
     </html>`},
+  /**
+   * 
+   * @param {Array} css_list css파일을 읽은 문자열 리스트
+   * @param {Array} script_list script파일을 읽은 문자열 리스트
+   * @param {Array} stock_data [종목이름,종목현재가] 리스트
+   * @param {Array} stock_1m_data 분봉데이터가 들어있는 리스트
+   * @param {Array} stock_info_data 4가지 정보가 들어있는 리스트
+   * @returns 
+   */
+  serch_page : function(css_list = [],
+    script_list = [],
+    stock_data = [],
+    stock_1m_data = [],
+    stock_info_data = []
+    ){
+    var css = '';
+    css_list.map((css_element)=>{
+      css += `<style>${css_element}</style>${'\n'}`;
+    })
+    var script = '';
+    script_list.map((script_element)=>{
+      script += `<script>${script_element}</script>${'\n'}`;
+    })
+    return `<!DOCTYPE html>
+    <html lang="en">
+    <head>
+        <title>Winter-Project</title>
+        <meta charset="UTF-8">
+        <script src="https://code.highcharts.com/highcharts.js"></script>
+        ${css}
+    </head>
+    <body>
+        <nav class="top">
+            <h1 class="title__box__name">Stock File<br>Stockholm
+                <line class="title__line"></line>
+            </h1>
+            <form class="title__search" action="post">
+                <input type="text" placeholder="enter the stock name">
+            </form>
+        </nav>
+        <underbox class="underbox">
+            <div class="underbox__main__index">
+                <div class="underbox_stock-name">${stock_data[0]}</div>
+                <div class="underbox_stock">
+                    <span class="underbox_stock_price">${stock_data[1]}</span>
+                </div>
+            </div>
+            <div class="underbox__main__graph" id="container">
+            </div>
+            <div class="underbox_main_info">
+                <div class="underbox_stock_info" id="first_info">
+                    <p class="stock_info_keys">전일대비 퍼센트</p>
+                    <p class="stock_info_values">${stock_info_data[0]}</p>
+                </div>
+                <div class="underbox_stock_info">
+                    <p class="stock_info_keys">주식 시가</p>
+                    <p class="stock_info_values">${stock_info_data[1]}</p>
+                </div>
+                <div class="underbox_stock_info">
+                    <p class="stock_info_keys">주식 최고가</p>
+                    <p class="stock_info_values">${stock_info_data[2]}</p>
+                </div>
+                <div class="underbox_stock_info">
+                    <p class="stock_info_keys">주식 최저가</p>
+                    <p class="stock_info_values">${stock_info_data[3]}</p>
+                </div>
+            </div>
+        </underbox>
+        <script>Highcharts.chart('container', {
+                title:{
+                text : '${stock_data[0]} 분봉데이터'
+            },
+            chart: {
+                backgroundColor: '#FFFFFF',
+                type: 'line',
+            },
+            legend: {
+                enabled:false
+            },
+            xAxis: {
+                title : {
+                    enabled : false
+                },
+                categories: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug','Sep', 'Oct', 'Nov', 'Dec'],
+            },
+            yAxis: {
+                title : {
+                    enabled : false
+                }
+            },
+            series: [{
+                name : '분봉데이터',
+                data: ${stock_1m_data}
+            }]
+        });</script>
+    ${script}
+    </body>
+    </html>`;
+  },
   /** */
   not_found_page :function(css_list = []){
     var css = '';
