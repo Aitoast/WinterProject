@@ -151,7 +151,7 @@ var html = {
                 title : {
                     enabled : false
                 },
-                categories: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug','Sep', 'Oct', 'Nov', 'Dec'],
+                categories: [${time_list}],
             },
             yAxis: {
                 title : {
@@ -160,7 +160,7 @@ var html = {
             },
             series: [{
                 name : '분봉데이터',
-                data: ${stock_1m_data}
+                data: [${stock_1m_data}]
             }]
         });</script>
     ${script}
@@ -228,7 +228,6 @@ server.post("/", (req, res) => {
       res.send(html.not_found_page([fs.readFileSync('./css/title.css','utf8')]))
       else{
         /** 종목코드 */
-        console.log(respone);
         const stock_code = respone[0]["단축코드"];
         console.log(stock_code);
         //검색한 종목의 정보를 데이터 베이스에 저장하기
