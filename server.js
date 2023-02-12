@@ -84,6 +84,16 @@ var html = {
     stock_info_data = []
     ){
     var css = '';
+    var d=new Date()
+    var day=d.getDay()
+    var date = "날짜"
+    if(day==6){
+      date=d.getFullYear().toString()+"년"+d.getMonth().toString()+"월"+(d.getDate()-1).toString()+"일 분봉데이터"
+    }
+    else if(day==0){
+      date=d.getFullYear().toString()+"년"+d.getMonth().toString()+"월"+(d.getDate()-2).toString()+"일 분봉데이터"
+    }
+    else  date=d.getFullYear().toString()+"년"+d.getMonth().toString()+"월"+d.getDate().toString()+"일 분봉데이터"
     css_list.map((css_element)=>{
       css += `<style>${css_element}</style>${'\n'}`;
     })
@@ -137,8 +147,11 @@ var html = {
             </div>
         </underbox>
         <script>Highcharts.chart('container', {
-                title:{
+            title:{
                 text : '${stock_data[0]} 분봉데이터'
+            },
+            subtitle:{
+                text : '${date}'
             },
             chart: {
                 backgroundColor: '#FFFFFF',
