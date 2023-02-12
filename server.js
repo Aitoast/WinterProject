@@ -1,6 +1,4 @@
 import express from "express";
-import path from "path";
-import { fileURLToPath } from "url";
 import bodyParser from "body-parser";
 import { createConnection } from "mysql";
 import broker from "./Mymojito/Mymojito.js";
@@ -24,8 +22,6 @@ fs.readFileSync('./css/underbox.css','utf8')]
 
 var time_list = fs.readFileSync('./date.txt','utf8').split(',')
 
-const __filename = fileURLToPath(import.meta.url);
-const __dirname = path.dirname(__filename);
 const server = express();
 const port = 3000
 //서버 3000번 사용
