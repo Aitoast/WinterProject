@@ -292,7 +292,25 @@ server.post("/", (req, res) => {
               });
             });
           }
-        );
+        ).then((data)=>{
+          var select_sql = `SELECT prdy_ctrt,stck_oprc,stck_hgpr,stck_lwpr FROM ${stock_kr_string}info`
+          connection.query(select_sql, function (err, respone) {
+            if(err) console.log(err);
+            else{
+              var stock_info_data = Object.values(respone[0]);
+              var select_sql = `SELECT stck_prpr FROM ${stock_kr_string}분봉`
+              connection.query(select_sql, function (err, respone) {
+                if(err) console.log(err);
+                else{
+                  var stock_1m_data = respone.map((element)=>{
+                    return Number(element.stck_prpr);
+                  })
+                  res.send(html.serch_page(css_list,[],[stock_kr_string,stock_1m_data.at(-1)],stock_1m_data,stock_info_data))
+                }
+              })
+            }
+          })
+        });
       }
     }
   });  
