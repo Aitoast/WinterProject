@@ -25,7 +25,6 @@
             <div class="underbox_stock-name">삼성전자</div>
             <div class="underbox_stock">
                 <span class="underbox_stock_price">63500</span>
-                <span class="underbox_stock_down">11.49%</span>
             </div>
             
         </div>
@@ -35,7 +34,22 @@
         </div>
         <!-- 검색한 주식의 정보가 들어갈 div태그 -->
         <div class="underbox_main_info">
-            주식정보 쭈르륵
+            <div class="underbox_stock_info" id="first_info">
+                <p class="stock_info_keys">전일대비 퍼센트</p>
+                <p class="stock_info_values">11%</p>
+            </div>
+            <div class="underbox_stock_info">
+                <p class="stock_info_keys">주식 시가</p>
+                <p class="stock_info_values">63000</p>
+            </div>
+            <div class="underbox_stock_info">
+                <p class="stock_info_keys">주식 최고가</p>
+                <p class="stock_info_values">66000</p>
+            </div>
+            <div class="underbox_stock_info">
+                <p class="stock_info_keys">주식 최저가</p>
+                <p class="stock_info_values">620000</p>
+            </div>
         </div>
     </underbox>
     <script>Highcharts.chart('container', {
@@ -52,9 +66,6 @@
         xAxis: {
             title : {text : 'x축 제목'},
             categories: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug','Sep', 'Oct', 'Nov', 'Dec'],
-            labels:{
-                    <!-- style: {color:''} -->
-                }
         },
         yAxis: {
             title : {
