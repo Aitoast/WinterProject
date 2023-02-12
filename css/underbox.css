@@ -1,56 +1,82 @@
 .underbox {
     display: flex;
+    width: 1450px;
     margin: 30px 0px;
     border: 3px solid black;
-    height: 100vh;
+    height: 800px;
 }
 
 
 .underbox__main {
-    width: 1200px;
-    height: 650px;
+    width: 1450px;
+    height: 750px;
     margin: 20px 20px;
     border: 2px solid black;
     justify-content: center;
     align-items: center;
     font-weight: 600;
-}
-.underbox__main__index {
-    padding: 5px 5px;
-    margin: 20px 20px;
-    width: 1000px;
-    height: 60px;
-    text-align: left;
-    border: 1px solid black;
-    border-radius: 8px;
-}
-.underbox__main__graph {
-    padding: 10px 10px;
-    margin: 20px 20px;
-    width: 1000px;
-    height: 500px;
-    border: 1px solid black
-    ;
+    background-color: #ebf1fb;
 }
 
-.underbox__main__index__result {
-    display: flex;
-    justify-content: center;
-    padding: 10px 10px;
-}
-
-.table-box {
+.underbox__name {
+    margin-top: 50px;
     margin-left: 50px;
+    margin-bottom: 20px;
+    font-size: 25px;
 }
 
-.underbox__main__index__result table {
-    border: 2px solid black;
+.underbox__score {
+    display: flex;
+    margin-left: 50px;
+    margin-bottom: 20px;
 }
 
-.underbox__main__index__result table th,tr{
-    border: 1px solid black;
+.underbox__score__one {
+    font-size: 45px;
+    font-weight: 700;
 }
 
-.underbox__main__index__result table td {
-    border: 1px solid rgba(0,0,0,0.5);
+.underbox__score__two {
+    padding: 20px;
+    font-size: 15px;
+    color: rgb(129, 172, 218);
+}
+
+.underbox__graph {
+    margin: 0px 50px;
+    width: 1000px;
+    height: 400px;
+}
+
+#container {
+    margin-top: 25px;
+    margin-left: 50px;
+    width: 900px;
+    height: 350px;
+}
+
+.underbox__chart {
+    margin: 30px 150px;
+    display: flex;
+    flex-direction: column;
+}
+
+.underbox__chart table,td,th {
+    text-align: center;
+    height: 50px;
+    vertical-align: middle;
+}
+
+.underbox__chart table {
+    width: 800px;
+    background-color: #d8dfea;
+    border-radius: 10px;
+}
+
+.underbos__chart ,th,td {
+    border-right: 2px solid rgba(0,0,0,0.1);
+}
+
+.no-border {
+    border-right: none;
 }

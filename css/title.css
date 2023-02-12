@@ -1,5 +1,6 @@
 .top {
     background-color: black;
+    width: 1450px;
     padding: 20px 10px;
     height: 130px;
 }
@@ -41,7 +42,6 @@
 
 .title__search {
     display: flex;
-    width: 700px;
     height: 40px;
     margin: 100px 0 0 150px;
     border: 1px solid black;

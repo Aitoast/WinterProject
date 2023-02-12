@@ -32,7 +32,7 @@ server.use(bodyParser.urlencoded({ extended: true }));
 
 //초기 화면 불러오기
 server.get("/", (req, res) => {
-  res.sendFile(__dirname + "/HTML/start.html");
+  res.sendFile(__dirname + "/HTML/home.html");
 });
 
 // post로 검색창의 입력값 받아오기
