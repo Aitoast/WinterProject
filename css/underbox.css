@@ -1,82 +1,81 @@
 .underbox {
     display: flex;
-    width: 1450px;
+    flex-direction: column;
     margin: 30px 0px;
-    border: 3px solid black;
-    height: 800px;
+    height: auto;
 }
 
-
-.underbox__main {
-    width: 1450px;
-    height: 750px;
+.underbox__main__index {
+    border: solid 1px;
+    padding: 5px 5px;
     margin: 20px 20px;
-    border: 2px solid black;
-    justify-content: center;
-    align-items: center;
-    font-weight: 600;
-    background-color: #ebf1fb;
+    width: auto;
+    height: auto;
+    border-radius: 8px;
 }
 
-.underbox__name {
-    margin-top: 50px;
-    margin-left: 50px;
-    margin-bottom: 20px;
-    font-size: 25px;
+.underbox_stock-name{
+    margin: 10px;
+    font-size: 30px;
 }
 
-.underbox__score {
+.underbox_stock{
+    margin: 10px;
     display: flex;
-    margin-left: 50px;
-    margin-bottom: 20px;
 }
 
-.underbox__score__one {
-    font-size: 45px;
-    font-weight: 700;
+.underbox_stock_price{
+    font-size: 60px;
 }
-
-.underbox__score__two {
-    padding: 20px;
-    font-size: 15px;
-    color: rgb(129, 172, 218);
-}
-
-.underbox__graph {
-    margin: 0px 50px;
-    width: 1000px;
-    height: 400px;
-}
-
-#container {
-    margin-top: 25px;
-    margin-left: 50px;
-    width: 900px;
-    height: 350px;
-}
-
-.underbox__chart {
-    margin: 30px 150px;
+.underbox_stock_down{
     display: flex;
     flex-direction: column;
+    justify-content: end;
+    margin-left: auto;
+    font-size: 30px;
+    color: blue;
 }
 
-.underbox__chart table,td,th {
+.underbox__main__graph {
+    margin: 20px 20px;
+    width: auto;
+    height: auto;
+}
+
+.underbox_main_info{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: auto;
+    height: 120px;
+    margin: 20px 20px;
+    margin-top: 0px;
+    border: none;
+    border-radius: 5px;
+    background-color: rgb(235, 235, 235);
+}
+
+.underbox_stock_info{
+    width: 100%;
+    height: auto;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
     text-align: center;
-    height: 50px;
-    vertical-align: middle;
+    border-left: dotted 1px;
+    border-color: rgb(190, 190, 190);
 }
 
-.underbox__chart table {
-    width: 800px;
-    background-color: #d8dfea;
-    border-radius: 10px;
+#first_info{
+    border : none;
 }
 
-.underbos__chart ,th,td {
-    border-right: 2px solid rgba(0,0,0,0.1);
+.stock_info_keys{
+    margin: 10px;
+    font-size: 20px;
 }
 
-.no-border {
-    border-right: none;
+.stock_info_values{
+    margin: 10px;
+    font-size: 20px;
 }
