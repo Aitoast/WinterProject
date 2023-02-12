@@ -133,6 +133,10 @@ class Mymojito {
     if (to > "153000") {
       to = "153000";
     }
+    //새벽에는 빈배열을 반환
+    else{
+      return [];
+    }
 
     //최근 30분 일단 output에 담기 (await로 가져올때까지 기다린다.)
     var output = await this.#fetch_today_1m_ohlcv(symbol, to);
