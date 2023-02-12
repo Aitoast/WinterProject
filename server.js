@@ -86,14 +86,17 @@ var html = {
     var css = '';
     var d=new Date()
     var day=d.getDay()
-    var date = "날짜"
+    var year=d.getFullYear().toString()
+    var month=(d.getMonth()-1).toString()
+    var days= d.getDate()
+    var date = year+"년"+month+"월"+days+"일 분봉데이터"
     if(day==6){
-      date=d.getFullYear().toString()+"년"+d.getMonth().toString()+"월"+(d.getDate()-1).toString()+"일 분봉데이터"
+      date=year+"년"+month+"월"+(days-1).toString()+"일 분봉데이터"
     }
     else if(day==0){
-      date=d.getFullYear().toString()+"년"+d.getMonth().toString()+"월"+(d.getDate()-2).toString()+"일 분봉데이터"
+      date=year+"년"+month+"월"+(days-2).toString()+"일 분봉데이터"
     }
-    else  date=d.getFullYear().toString()+"년"+d.getMonth().toString()+"월"+d.getDate().toString()+"일 분봉데이터"
+    else  date=year+"년"+month+"월"+days.toString()+"일 분봉데이터"
     css_list.map((css_element)=>{
       css += `<style>${css_element}</style>${'\n'}`;
     })
