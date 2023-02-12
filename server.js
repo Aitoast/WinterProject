@@ -212,7 +212,7 @@ var html = {
               <input name="stock" type="text" placeholder="enter the stock name">
           </form>
       </nav>
-      <div>없는 종목을 입력하였습니다.</div>
+      <div class="underbox_not">없는 종목을 입력하였습니다.</div>
     </body>
     </html>`;
   },

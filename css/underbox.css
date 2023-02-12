@@ -66,6 +66,11 @@
     border-color: rgb(190, 190, 190);
 }
 
+.underbox_not{
+    text-align: center;
+    font-size: 60px;
+}
+
 #first_info{
     border : none;
 }
