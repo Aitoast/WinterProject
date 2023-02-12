@@ -58,12 +58,12 @@ var html = {
       <!-- 제목과 검색창이있는 top태그 -->
       <nav class="top">
           <!-- 제목이 적혀있는 h1태그 -->
-          <h1 class="title__box__name">Stock File<br>Stockholm
+          <a href="/" class="title__box__name">Stock File<br>Stockholm
               <line class="title__line"></line>
-          </h1>
+          </a>
           <!-- 검색창이 있는 form태그 -->
           <form class="title__search" method="post">
-              <input type="text" placeholder="enter the stock name">
+              <input name="stock" type="text" placeholder="enter the stock name">
           </form>
       </nav>
     </body>
@@ -101,11 +101,11 @@ var html = {
     </head>
     <body>
         <nav class="top">
-            <h1 class="title__box__name">Stock File<br>Stockholm
+            <a href="/" class="title__box__name">Stock File<br>Stockholm
                 <line class="title__line"></line>
-            </h1>
-            <form class="title__search" action="post">
-                <input type="text" placeholder="enter the stock name">
+            </a>
+            <form class="title__search" method="post">
+              <input name="stock" type="text" placeholder="enter the stock name">
             </form>
         </nav>
         <underbox class="underbox">
@@ -185,12 +185,12 @@ var html = {
       <!-- 제목과 검색창이있는 top태그 -->
       <nav class="top">
           <!-- 제목이 적혀있는 h1태그 -->
-          <h1 class="title__box__name">Stock File<br>Stockholm
+          <a href="/" class="title__box__name">Stock File<br>Stockholm
               <line class="title__line"></line>
-          </h1>
+          </a>
           <!-- 검색창이 있는 form태그 -->
           <form class="title__search" method="post">
-              <input type="text" placeholder="enter the stock name">
+              <input name="stock" type="text" placeholder="enter the stock name">
           </form>
       </nav>
       <div>없는 종목을 입력하였습니다.</div>
