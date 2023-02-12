@@ -310,17 +310,10 @@ server.post("/", (req, res) => {
               })
             }
           })
+
         });
       }
     }
   });  
-  }); 
-  let chart_data =`SELECT stck_prpr, prdy_ctrt, stck_oprc, stck_hgpr, stck_lwpr FROM ${stock_kr_string}info;`
-  connection.query(chart_data,function(err,respone){
-    if(err) console.log(err)
-    else {
-      console.log(respone[0]["stck_prpr"],respone[0]["stck_hgpr"])
-      
-    }
-  })
+  });
 
