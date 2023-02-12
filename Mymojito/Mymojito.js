@@ -134,7 +134,7 @@ class Mymojito {
       to = "153000";
     }
     //새벽에는 빈배열을 반환
-    else{
+    else {
       return [];
     }
 
@@ -144,9 +144,9 @@ class Mymojito {
     var output2 = output.output2;
 
     //[{},{},{}] => [[],[],[]] 형변환!
-    output2 = output2.map((element)=>{
-      return Object.values(element)
-    })
+    output2 = output2.map((element) => {
+      return Object.values(element);
+    });
 
     //30분중 마지막 (1분봉) 의 시간 데이터를 last_hour에 할당
     var last_hour = output2.at(-1).at(1);
@@ -161,9 +161,9 @@ class Mymojito {
       output = await this.#fetch_today_1m_ohlcv(symbol, dt);
       output2 = output.output2;
       //[{},{},{}] => [[],[],[]] 형변환!
-      output2 = output2.map((element)=>{
-        return Object.values(element)
-      })
+      output2 = output2.map((element) => {
+        return Object.values(element);
+      });
       //last_hour 를 마지막 시간으로 변경
       last_hour = output2.at(-1).at(1);
       //일분봉 배열 확장
@@ -188,9 +188,15 @@ class Mymojito {
     }
     //MM이 10보다 작을때 1을 빼고 앞에 0을 붙혀준다.
     if (to.substring(2, 4) <= "10") {
-      return `${to.substring(0, 2)}0${to.substring(2, 4) - 1}${to.substring(4,6)}`;
+      return `${to.substring(0, 2)}0${to.substring(2, 4) - 1}${to.substring(
+        4,
+        6
+      )}`;
     }
-    return `${to.substring(0, 2)}${to.substring(2, 4) - 1}${to.substring(4,6)}`;
+    return `${to.substring(0, 2)}${to.substring(2, 4) - 1}${to.substring(
+      4,
+      6
+    )}`;
   }
 }
 //클라우드 타입에서는 파일을 읽어오는게 아닌 환경변수로 접근한다.
