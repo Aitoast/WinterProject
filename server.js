@@ -239,111 +239,119 @@ server.post("/", (req, res) => {
   /**입력정보로 종목코드를 뽑아오는 sql 명령문*/
   var select_sql = `SELECT 단축코드 FROM stock WHERE 한글명="${stock_kr_string}";`;
   connection.query(select_sql, function (err, respone) {
-    if (err) console.log(err);
-    else {
+    if (err) {
+      console.log(err);
+      console.log("SELECT 단축코드 FROM stock WHERE 한글명= 실패!!!");
+    } else {
       //사용자가 없는 종목을 입력했을때 == select문의 결과가 빈배열일때
       if (respone.length == 0) {
         console.log(respone);
-        res.send(
-          html.not_found_page(css_list)
-        );
+        res.send(html.not_found_page(css_list));
       } else {
         /** 종목코드 */
         const stock_code = respone[0]["단축코드"];
         console.log(stock_code);
         //검색한 종목의 정보를 데이터 베이스에 저장하기
-        broker.fetch_price(stock_code).then(
-          /** @param {Object} stock_info fetch_price로 가져온 Object형 변수*/
-          function (stock_info) {
-            // 여러 사용자가 데이터를 입력할 때 한 테이블에 쓰면 충돌이 발생할 것이기 때문에
-            // 주식마다 주식정보, 분봉 테이블을 생성시킨다. 존재할 시 데이터 바로 입력
-            let create_sql = `CREATE TABLE ${stock_kr_string}정보 ( 
+        broker
+          .fetch_price(stock_code)
+          .then(
+            /** @param {Object} stock_info fetch_price로 가져온 Object형 변수*/
+            function (stock_info) {
+              // 여러 사용자가 데이터를 입력할 때 한 테이블에 쓰면 충돌이 발생할 것이기 때문에
+              // 주식마다 주식정보, 분봉 테이블을 생성시킨다. 존재할 시 데이터 바로 입력
+              let create_sql = `CREATE TABLE ${stock_kr_string}정보 ( 
             ${Object.keys(stock_info).join(` VARCHAR(20),
             `)} VARCHAR(20)
             );`;
-            //테이블 생성
-            connection.query(create_sql, function (err, results) {
-              //만약 create문이 에러라면 테이블을 초기화(삭제)한다.
-              if (err) {
-                // 원래 테이블을 초기화 시키는 명령문
-                let del_sql = `DELETE FROM ${stock_kr_string}정보; `;
-                connection.query(del_sql, function (err, results) {
-                  if (err) console.log(err);
-                  else console.log("delete succesfully");
-                });
-              } else console.log("create table succesfully");
-              //테이블 생성,초기화 이후 데이터 저장
-              let insert_sql = `INSERT INTO ${stock_kr_string}정보 SET ?;`;
-              connection.query(insert_sql, stock_info, function (err, results) {
-                if (err) console.log(err);
-                else console.log("save succesfully");
-              });
-            });
-          }
-        );
-
-        //검색한 종목의 분봉데이터를 데이터 베이스에 저장하기
-        broker
-          .fetch_today_1m_ohlcv(stock_code, "")
-          .then(
-            /** @param {Array<Array<string>>} mindata 분봉데이터 2차원배열*/
-            function (mindata) {
-              let create_sql = `CREATE TABLE ${stock_kr_string}분봉 ( 
-              ${stock_1m_columns.join(` VARCHAR(20),
-              `)} VARCHAR(20)
-              );`;
               //테이블 생성
               connection.query(create_sql, function (err, results) {
-                //create문이 에러라면 테이블 초기화
+                //만약 create문이 에러라면 테이블을 초기화(삭제)한다.
                 if (err) {
                   // 원래 테이블을 초기화 시키는 명령문
-                  let del_sql = `DELETE FROM ${stock_kr_string}분봉; `;
+                  let del_sql = `DELETE FROM ${stock_kr_string}정보; `;
                   connection.query(del_sql, function (err, results) {
                     if (err) console.log(err);
                     else console.log("delete succesfully");
                   });
                 } else console.log("create table succesfully");
                 //테이블 생성,초기화 이후 데이터 저장
-                var insert_sql = `INSERT INTO ${stock_kr_string}분봉 values ?;`;
-                //db에 데이터 저장
+                let insert_sql = `INSERT INTO ${stock_kr_string}정보 SET ?;`;
                 connection.query(
                   insert_sql,
-                  [mindata],
+                  stock_info,
                   function (err, results) {
                     if (err) console.log(err);
                     else console.log("save succesfully");
-                    connection.end();
                   }
                 );
               });
             }
           )
-          .then((data) => {
-            var select_sql = `SELECT prdy_ctrt,stck_oprc,stck_hgpr,stck_lwpr FROM ${stock_kr_string}정보`;
-            connection.query(select_sql, function (err, respone) {
-              if (err) console.log(err);
-              else {
-                var stock_info_data = Object.values(respone[0]);
-                var select_sql = `SELECT stck_prpr FROM ${stock_kr_string}분봉`;
+          .then(() => {
+            //검색한 종목의 분봉데이터를 데이터 베이스에 저장하기
+            broker
+              .fetch_today_1m_ohlcv(stock_code)
+              .then(
+                /** @param {Array<Array<string>>} mindata 분봉데이터 2차원배열*/
+                function (mindata) {
+                  let create_sql = `CREATE TABLE ${stock_kr_string}분봉 ( 
+            ${stock_1m_columns.join(` VARCHAR(20),
+            `)} VARCHAR(20)
+            );`;
+                  //테이블 생성
+                  connection.query(create_sql, function (err, results) {
+                    //create문이 에러라면 테이블 초기화
+                    if (err) {
+                      // 원래 테이블을 초기화 시키는 명령문
+                      let del_sql = `DELETE FROM ${stock_kr_string}분봉; `;
+                      connection.query(del_sql, function (err, results) {
+                        if (err) console.log(err);
+                        else console.log("delete succesfully");
+                      });
+                    } else console.log("create table succesfully");
+                    //테이블 생성,초기화 이후 데이터 저장
+                    console.log(mindata);
+                    var insert_sql = `INSERT INTO ${stock_kr_string}분봉 values ?;`;
+                    //db에 데이터 저장
+                    connection.query(
+                      insert_sql,
+                      [mindata],
+                      function (err, results) {
+                        if (err) console.log(err);
+                        else console.log("save succesfully");
+                        connection.end();
+                      }
+                    );
+                  });
+                }
+              )
+              .then(() => {
+                var select_sql = `SELECT prdy_ctrt,stck_oprc,stck_hgpr,stck_lwpr FROM ${stock_kr_string}정보`;
                 connection.query(select_sql, function (err, respone) {
                   if (err) console.log(err);
                   else {
-                    var stock_1m_data = respone.map((element) => {
-                      return Number(element.stck_prpr);
+                    var stock_info_data = Object.values(respone[0]);
+                    var select_sql = `SELECT stck_prpr FROM ${stock_kr_string}분봉`;
+                    connection.query(select_sql, function (err, respone) {
+                      if (err) console.log(err);
+                      else {
+                        var stock_1m_data = respone.map((element) => {
+                          return Number(element.stck_prpr);
+                        });
+                        res.send(
+                          html.serch_page(
+                            css_list,
+                            [],
+                            [stock_kr_string, stock_1m_data.at(-1)],
+                            stock_1m_data,
+                            stock_info_data
+                          )
+                        );
+                      }
                     });
-                    res.send(
-                      html.serch_page(
-                        css_list,
-                        [],
-                        [stock_kr_string, stock_1m_data.at(-1)],
-                        stock_1m_data,
-                        stock_info_data
-                      )
-                    );
                   }
                 });
-              }
-            });
+              });
           });
       }
     }

@@ -34,10 +34,6 @@ class Mymojito {
 
         var token_data = JSON.parse(response.body);
 
-        token_data.api_key = this.api_key;
-
-        token_data.api_secret = this.api_secret;
-
         fs.writeFileSync("token.dat", JSON.stringify(token_data), "utf8");
 
         console.log(`토큰 갱신`);
@@ -119,16 +115,20 @@ class Mymojito {
   async fetch_today_1m_ohlcv(symbol, to = "") {
     //반환값을 담을 result
     var result = {};
+    console.log(to);
     //현재 시각을 문자열로 오후2시30분 => "143000"
     //to입력을 안했다면 to를 현재 시간으로 설정
     if (to == "") {
       var today = new Date();
-      var now =
-        today.getHours().toString() +
-        today.getMinutes().toString() +
-        today.getSeconds().toString();
-      to = now;
+      var hour = today.getHours().toString();
+      if(hour<10) hour = `0${hour}`;
+      var minute = today.getMinutes().toString();
+      if(minute<10) minute = `0${minute}`;
+      var second = today.getSeconds().toString();
+      if(second<10) second = `0${second}`;
+      to = `${hour}${minute}${second}`;
     }
+    console.log(to);
     //종이 끝나는 오후 3시 30분 이후에는 3시30분으로 고정
     if (to > "153000") {
       to = "153000";
@@ -200,9 +200,9 @@ class Mymojito {
   }
 }
 //클라우드 타입에서는 파일을 읽어오는게 아닌 환경변수로 접근한다.
-var app = fs.readFileSync("./app.txt", "utf8");
-var secret = fs.readFileSync("./secret.txt", "utf8");
-var broker = new Mymojito(app, secret);
+// var app = fs.readFileSync("./app.txt", "utf8");
+// var secret = fs.readFileSync("./secret.txt", "utf8");
+var broker = new Mymojito(process.env.app,process.env.secret);
 broker.access_token = await broker.issue_token();
 
 // 토큰을 반복적으로 갱신하는 코드 !!!!인터벌은 변경해야함
