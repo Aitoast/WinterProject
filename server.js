@@ -255,8 +255,8 @@ server.post("/", (req, res) => {
             // 여러 사용자가 데이터를 입력할 때 한 테이블에 쓰면 충돌이 발생할 것이기 때문에
             // 주식마다 주식정보, 분봉 테이블을 생성시킨다. 존재할 시 데이터 바로 입력
             let create_sql = `CREATE TABLE ${stock_kr_string}info ( 
-            ${Object.keys(stock_info).join(` VARCHAR(50),
-            `)} VARCHAR(50)
+            ${Object.keys(stock_info).join(` VARCHAR(20),
+            `)} VARCHAR(20)
             );`;
             //테이블 생성
             connection.query(create_sql, function (err, results) {
@@ -284,8 +284,8 @@ server.post("/", (req, res) => {
           /** @param {Array<Array<string>>} mindata 분봉데이터 2차원배열*/
           function (mindata) {
             let create_sql = `CREATE TABLE ${stock_kr_string}분봉 ( 
-              ${stock_1m_columns.join(` VARCHAR(50),
-              `)} VARCHAR(50)
+              ${stock_1m_columns.join(` VARCHAR(20),
+              `)} VARCHAR(20)
               );`;
             //테이블 생성
             connection.query(create_sql, function (err, results) {
