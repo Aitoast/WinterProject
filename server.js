@@ -89,7 +89,7 @@ var html = {
     var d = new Date();
     var day = d.getDay();
     var year = d.getFullYear().toString();
-    var month = (d.getMonth() - 1).toString();
+    var month = (d.getMonth() + 1).toString();
     var days = d.getDate();
     var date = year + "년" + month + "월" + days + "일 분봉데이터";
     if (day == 6) {
