@@ -120,7 +120,7 @@ class Mymojito {
     //to입력을 안했다면 to를 현재 시간으로 설정
     if (to == "") {
       var today = new Date();
-      var hour = today.getHours().toString();
+      var hour = (today.getHours()+9).toString();
       if(hour<10) hour = `0${hour}`;
       var minute = today.getMinutes().toString();
       if(minute<10) minute = `0${minute}`;
@@ -134,8 +134,8 @@ class Mymojito {
       to = "153000";
     }
     //새벽에는 빈배열을 반환
-    else {
-      return [];
+    else if(to<"090000") {
+      return []
     }
 
     //최근 30분 일단 output에 담기 (await로 가져올때까지 기다린다.)
